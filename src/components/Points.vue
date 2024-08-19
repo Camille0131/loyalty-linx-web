@@ -9,7 +9,7 @@ const balances = ref([
   {
     balanceItems: [
       {
-        label: "Total points",
+        label: "Available points",
         value: "20,000.20",
         id: 2,
       },

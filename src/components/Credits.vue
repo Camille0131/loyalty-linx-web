@@ -2,16 +2,19 @@
 import { ref } from "vue";
 import PointsCard from "./PointsCard/PointsCard.vue";
 import PointsHistory from "./PointsCard/PointsHistory.vue";
-
+import Services from "./HomeCard/Services.vue";
 const props = ["item, index"];
 
 const balances = ref([
   {
     balanceItems: [
       {
-        label: "Total credits",
+        label: "Available credits",
         value: "10,200.20",
         id: 1,
+        progress: true,
+        min: "20,000.00",
+        dueDate: "5/2/2025",
       },
     ],
   },
@@ -65,6 +68,6 @@ const brandDatas = ref([
         :index="index"
       />
     </ul>
-    <PointsHistory :brands="brandDatas" />
   </template>
+  <Services />
 </template>

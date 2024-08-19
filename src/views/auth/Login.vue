@@ -52,7 +52,7 @@ async function saveUserData(data, name) {
     const success = await setCookieAsync(name, userDataString, 7);
 
     if (success) {
-      console.log("Cookie saved successfully");
+      // console.log("Cookie saved successfully");
     }
   } catch (error) {
     console.error("Error saving cookie:", error);
@@ -124,7 +124,7 @@ const handleSubmit = async (e) => {
       generetedOtp.value = generatedToken();
       //save data in cookies
       saveUserData(data.token, "u_TOK");
-      console.log(data.token);
+      // console.log(data.token);
       if (data.isFirstTimeLogin) {
         router.push({
           path: "/verification",
@@ -140,7 +140,7 @@ const handleSubmit = async (e) => {
       return data;
     } else {
       error.value = data.message;
-      console.log(data.message);
+      // console.log(data.message);
     }
   } catch (error) {
     console.error(error);

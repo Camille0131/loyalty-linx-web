@@ -19,7 +19,7 @@ let confirmPasswordVisible = ref(false);
 let passwordVisible = ref(false);
 
 const iti = ref({});
-const urlRegister = "http://127.0.0.1:5000/api/user/register";
+const urlRegister = "https://loyalty-linxapi.vercel.app/api/user/register";
 
 // ----------------------- START OF COOKIE FUNCTION -----------------------
 

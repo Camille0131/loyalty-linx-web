@@ -4,8 +4,8 @@ import { useRouter } from "vue-router";
 import authStore from "../../stores/auth";
 import otp from "../../components/authentications/OTP.vue";
 
-const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
+const urlLogin = "http://localhost:5000/api/user/login";
+const urlProfile = "http://localhost:5000/api/user/profile";
 
 const email = ref("");
 const password = ref("");
@@ -169,9 +169,21 @@ const handleSubmit = async (e) => {
           class="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] sm:w-full"
         >
           <form class="space-y-4" @submit.prevent="handleSubmit">
-            <div class="mb-8">
-              <h3 class="text-gray-800 text-3xl font-extrabold">Sign in</h3>
+            <div class="flex justify-center">
+              <img
+                class="m-1 h-12 w-auto"
+                src="/src/assets/img/authimages/loyaltilinx-web-favicon.png"
+                alt="Workflow"
+              />
+              <span
+                style="font-family: poppins"
+                class="text-gray-800 self-center text-3xl font-extrabold whitespace-nowrap dark:text-white"
+                >Loyalty Linx</span
+              >
             </div>
+            <!-- <div class="mb-8">
+              <h3 class="text-gray-800 text-3xl font-extrabold">Sign in</h3>
+            </div> -->
 
             <div>
               <label class="text-gray-800 text-sm mb-2 block">Email</label>
@@ -281,7 +293,64 @@ const handleSubmit = async (e) => {
               </button>
               <!-- </router-link> -->
             </div>
+            <div
+              class="flex w-full items-center gap-2 py-6 text-sm text-slate-600"
+            >
+              <div class="h-px w-full bg-slate-200"></div>
+              OR
+              <div class="h-px w-full bg-slate-200"></div>
+            </div>
 
+            <div class="mt-7 flex flex-col gap-2">
+              <a
+                class="cursor-pointer hover:bg-gray-100 inline-flex h-10 w-full items-center justify-center rounded-lg gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <!-- <img
+                  src="https://www.svgrepo.com/show/512317/github-142.svg"
+                  alt="GitHub"
+                  class="h-[18px] w-[18px]"
+                /> -->
+                <div class="w-[1.4rem]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xml:space="preserve"
+                    viewBox="0 0 40 40"
+                  >
+                    <linearGradient
+                      id="a"
+                      x1="-277.375"
+                      x2="-277.375"
+                      y1="406.6018"
+                      y2="407.5726"
+                      gradientTransform="matrix(40 0 0 -39.7778 11115.001 16212.334)"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stop-color="#0062e0" />
+                      <stop offset="1" stop-color="#19afff" />
+                    </linearGradient>
+                    <path
+                      fill="url(#a)"
+                      d="M16.7 39.8C7.2 38.1 0 29.9 0 20 0 9 9 0 20 0s20 9 20 20c0 9.9-7.2 18.1-16.7 19.8l-1.1-.9h-4.4l-1.1.9z"
+                    />
+                    <path
+                      fill="#fff"
+                      d="m27.8 25.6.9-5.6h-5.3v-3.9c0-1.6.6-2.8 3-2.8H29V8.2c-1.4-.2-3-.4-4.4-.4-4.6 0-7.8 2.8-7.8 7.8V20h-5v5.6h5v14.1c1.1.2 2.2.3 3.3.3 1.1 0 2.2-.1 3.3-.3V25.6h4.4z"
+                    />
+                  </svg>
+                </div>
+                Continue with Facebook
+              </a>
+
+              <a
+                class="inline-flex cursor-pointer hover:bg-gray-100 h-10 w-full items-center justify-center rounded-lg gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  alt="Google"
+                  class="h-[18px] w-[18px]"
+                />Continue with Google
+              </a>
+            </div>
             <p class="text-sm !mt-8 text-center text-gray-800">
               Don't have an account
               <RouterLink

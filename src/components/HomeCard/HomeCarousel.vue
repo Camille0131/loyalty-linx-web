@@ -1,11 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { initCollapses } from "flowbite";
+import { initCarousels } from "flowbite";
 
+onMounted(() => {
+  initCarousels();
+});
 const carouselImages = ref([
   {
     carouselItem: [
       {
-        // url: "https://flowbite.com/docs/images/carousel/carousel-1.svg",
         name: "image1",
         path: new URL(
           "../../assets/img/carousel/carousel-01.jpg",
@@ -13,7 +17,6 @@ const carouselImages = ref([
         ).href,
       },
       {
-        // url: "https://flowbite.com/docs/images/carousel/carousel-2.svg",
         name: "image2",
         path: new URL(
           "../../assets/img/carousel/carousel-02.jpg",
@@ -21,7 +24,6 @@ const carouselImages = ref([
         ).href,
       },
       {
-        // url: "https://flowbite.com/docs/images/carousel/carousel-3.svg",
         name: "image3",
         path: new URL(
           "../../assets/img/carousel/carousel-03.jpg",
@@ -29,7 +31,6 @@ const carouselImages = ref([
         ).href,
       },
       {
-        // url: "https://flowbite.com/docs/images/carousel/carousel-4.svg",
         name: "image4",
         path: new URL(
           "../../assets/img/carousel/carousel-03.jpg",
@@ -43,19 +44,17 @@ const activeIndex = ref(0);
 </script>
 
 <template>
-  <div
-    id="default-carousel"
-    class="relative w-full relative"
-    data-carousel="slide"
-  >
-    <div class="absolute z-40 w-full bg-yellow-500 rounded-sm p-2">
-      <h1 class="text-2xl font-semibold text-white">
-        Whats new? Heres our deals today!
-      </h1>
-    </div>
+  <div class="p-2 bg-white">
+    <h2 class="font-bold">Whats new?</h2>
+    <p class="text-[.8rem] md:text-[.9rem] font-semibold">
+      Experience and join our exciting updates!
+    </p>
+    <div class="h-px w-full bg-slate-200"></div>
+  </div>
+  <div id="default-carousel " class="w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
 
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+    <div class="relative bg-white h-40 mb-5 overflow-hidden rounded-lg md:h-96">
       <template
         v-for="carouselImage in carouselImages"
         :key="carouselImage.name"
@@ -70,7 +69,7 @@ const activeIndex = ref(0);
           <img
             :src="carouselItem.path"
             :index="index"
-            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+            class="object-contain absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
           />
         </div>

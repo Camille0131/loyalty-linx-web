@@ -3,8 +3,6 @@ import Landing from "./views/Landing.vue";
 import login from "./views/auth/Login.vue";
 import register from "./views/auth/Register.vue";
 import { RouterView } from "vue-router";
-
-
 </script>
 
 <template>

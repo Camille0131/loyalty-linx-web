@@ -99,15 +99,12 @@ const handleKeyDown = function (event, index) {
   font-family: poppins;
   font-weight: 600;
 }
+
 input:focus {
   outline: none;
   box-shadow: none;
 }
 
-/* .digit-box:focus {
-  outline: 3px solid black;
-  caret-color: transparent;
-} */
 .digit-box:focus {
   outline: none;
   box-shadow: none;

@@ -162,7 +162,7 @@ async function signOut() {
       <router-link to="/">
         <button
           @click="signOut"
-          class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-red lg:text-base"
         >
           <svg
             class="fill-current"

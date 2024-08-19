@@ -13,11 +13,13 @@
     "crypto-js": "^4.2.0",
     "flowbite": "^2.5.1",
     "intl-tel-input": "^23.8.1",
+    "jsvectormap": "^1.6.0",
     "pinia": "^2.2.1",
     "sweetalert2": "^11.12.4",
     "vue": "^3.4.31",
     "vue-router": "4",
-    "vue-tel-input": "^9.1.4"
+    "vue-tel-input": "^9.1.4",
+    "vue3-apexcharts": "^1.5.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",

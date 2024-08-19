@@ -4,20 +4,21 @@ import HomeCardVue from "./HomeCard/HomeCard.vue";
 import HomeCarousel from "./HomeCard/HomeCarousel.vue";
 import DataStats from "./HomeCard/DataStats.vue";
 import TableHistory from "./tables/TableHistory.vue";
+import Services from "./HomeCard/Services.vue";
 
 const balances = ref([
   {
     balanceItems: [
       {
         name: "Current credits history",
-        label: "Total credits",
-        value: "2,000.00",
+        label: "Available credits",
+        value: "20,000.00",
         id: 1,
       },
       {
         name: "Points earned history",
-        label: "Total points",
-        value: "20,000.20",
+        label: "Available points",
+        value: "2,000.20",
         id: 2,
       },
     ],
@@ -32,9 +33,9 @@ const balances = ref([
       Experience and enjoy our exciting updates
     </h4>
   </div> -->
-  <div>
+  <!-- <div>
     <HomeCarousel id="carousel" />
-  </div>
+  </div> -->
   <template v-for="balance in balances" :key="balance.id">
     <ul id="homeCard" class="flex flex-row justify-evenly">
       <HomeCardVue
@@ -45,6 +46,11 @@ const balances = ref([
       />
     </ul>
   </template>
+  <Services />
+  <div class="px-6">
+    <HomeCarousel />
+  </div>
+  <div class="h-[4rem]"></div>
 </template>
 
 <style>

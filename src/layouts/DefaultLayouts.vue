@@ -1,10 +1,10 @@
 <script setup>
 import NavbarArea from "../components/NavBar/NavbarArea.vue";
+import BottomNavigation from "../components/NavBar/BottomNavigation.vue";
 </script>
 
 <template>
   <!-- Page Wrapper Start -->
-
   <div>
     <!-- Content Wrapper Start -->
     <div>
@@ -26,5 +26,7 @@ import NavbarArea from "../components/NavBar/NavbarArea.vue";
     </div>
     <!-- Content Wrapper End -->
   </div>
+  <BottomNavigation />
+
   <!-- Page Wrapper End -->
 </template>

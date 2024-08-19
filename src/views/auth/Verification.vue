@@ -13,12 +13,10 @@ const resendOtpTimer = ref(300); // 5 minutes timer
 const mobileNo = ref("");
 let resendOtpInterval = null;
 
-const urlSendOtp = "https://loyalty-linxapi.vercel.app/api/user/send-otp";
-const urlVerification =
-  "https://loyalty-linxapi.vercel.app/api/user/validate-code-login";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
-const urlRefreshCode =
-  "https://loyalty-linxapi.vercel.app/api/user/refresh-code";
+const urlSendOtp = "http://localhost:5000/api/user/send-otp";
+const urlVerification = "http://localhost:5000/api/user/validate-code-login";
+const urlProfile = "http://localhost:5000/api/user/profile";
+const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
 
 getCookieTokenAsync("u_TOK");
 getCookieMobileAsync("u_NO");

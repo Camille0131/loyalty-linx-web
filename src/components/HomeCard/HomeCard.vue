@@ -3,41 +3,60 @@ import { useRoute } from "vue-router";
 import { useNavBarStore } from "..//../stores/navbar";
 import { ref } from "vue";
 import TableHistory from "../tables/TableHistory.vue";
+import Services from "./Services.vue";
 const props = defineProps(["item", "index"]);
 </script>
 
 <template>
   <div
     id="container"
-    class="bg-white px-5 justify-center rounded-xl items-center flex flex-col mt-3 shadow-lg hover:shadow-xl"
+    class="px-2 justify-center rounded-2xl items-center flex flex-col mt-3"
   >
     <li
-      href="#"
-      class="w-full mt-6 mb-6 p-6 bg-gradient-to-r from-amber-400 to-amber-600 border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      class="w-full py-5 pt-6 px-4 bg-gradient-to-r from-amber-400 to-amber-600 border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
     >
-      <div class="w-full flex justify-end">
-        <img
-          id="image"
-          src="../../assets//img/authimages/loyaltilinx-web-favicon.png"
-          alt=""
-        />
-      </div>
-      <div>
-        <h5
-          class="mb-2 text-4xl font-bold tracking-tight text-amber-800 dark:text-white"
-        >
-          {{ item.value }}
-        </h5>
-        <p class="font-medium text-gray-700 dark:text-gray-400">
-          {{ item.label }}
-        </p>
+      <div class="flex flex-row justify-between">
+        <div>
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-amber-800 dark:text-white"
+          >
+            {{ item.value }}
+          </h5>
+          <p class="font-semibold text-xs text-gray-700 dark:text-gray-400">
+            {{ item.label }}
+          </p>
+        </div>
+        <div>
+          <div>
+            <img
+              style="width: 7rem"
+              id="image"
+              src="../../assets/img/loyaltilinxicon.png"
+              alt=""
+            />
+          </div>
+          <div>
+            <a class="cursor-pointer">
+              <p
+                class="flex justify-center bg-amber-700 text-[.8rem] rounded-md mt-2 text-white px-2 py-1 text-center"
+              >
+                <img
+                  class="w-[1rem] mr-1"
+                  src="../../assets/img/home/history-svgrepo-com.svg"
+                  alt=""
+                />
+                History
+              </p></a
+            >
+          </div>
+        </div>
       </div>
     </li>
     <div>
       <!-- <TableHistory /> -->
     </div>
     <div class="w-full p-2 mb-4" id="table">
-      <div class="relative overflow-x-auto sm:rounded-lg">
+      <div class="relative bg-white overflow-x-auto sm:rounded-lg">
         <p class="font-semibold text-xl mt-4 mx-4">{{ item.name }}</p>
         <TableHistory class="h-72" />
       </div>

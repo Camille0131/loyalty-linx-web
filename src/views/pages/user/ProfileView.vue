@@ -3,9 +3,8 @@ import DefaultLayouts from "../../../layouts/DefaultLayouts.vue";
 </script>
 
 <template>
-  <!-- ====== Profile Section Start -->
-  <DefaultLayouts class="bg-slate-100">
-    <div class="px-12 mt-6">
+  <DefaultLayouts>
+    <div class="px-12 pt-6">
       <div
         class="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
       >
@@ -296,5 +295,4 @@ import DefaultLayouts from "../../../layouts/DefaultLayouts.vue";
       </div>
     </div>
   </DefaultLayouts>
-  <!-- ====== Profile Section End -->
 </template>

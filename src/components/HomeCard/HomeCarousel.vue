@@ -12,28 +12,22 @@ const carouselImages = ref([
       {
         name: "image1",
         path: new URL(
-          "../../assets/img/carousel/carousel-01.jpg",
+          "../../assets/img/carousel/cash-back-offer-web-banner.jpg",
           import.meta.url
         ).href,
       },
       {
         name: "image2",
-        path: new URL(
-          "../../assets/img/carousel/carousel-02.jpg",
-          import.meta.url
-        ).href,
+        path: "https://as2.ftcdn.net/v2/jpg/02/48/39/75/1000_F_248397538_OsyBnjShqT7IRsCRIgVSkq5dSWbwRN0g.jpg",
       },
       {
         name: "image3",
-        path: new URL(
-          "../../assets/img/carousel/carousel-03.jpg",
-          import.meta.url
-        ).href,
+        path: "https://static.vecteezy.com/system/resources/previews/015/181/366/large_2x/earn-points-concept-for-loyal-customers-loyalty-program-and-get-rewards-suitable-for-web-landing-page-ui-mobile-app-banner-template-vector.jpg",
       },
       {
         name: "image4",
         path: new URL(
-          "../../assets/img/carousel/carousel-03.jpg",
+          "../../assets/img/carousel/winbanner.jpg",
           import.meta.url
         ).href,
       },
@@ -44,7 +38,7 @@ const activeIndex = ref(0);
 </script>
 
 <template>
-  <div class="p-2">
+  <div class="p-2 bg-white rounded-sm">
     <h2 class="font-bold">Whats new?</h2>
     <p class="text-[.8rem] md:text-[.9rem] font-semibold">
       Experience and join our exciting updates!
@@ -54,7 +48,7 @@ const activeIndex = ref(0);
   <div id="default-carousel " class="w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
 
-    <div class="relative bg-white h-40 mb-5 overflow-hidden rounded-lg md:h-96">
+    <div class="relative bg-white h-40 mb-5 overflow-hidden rounded-sm md:h-96">
       <template
         v-for="carouselImage in carouselImages"
         :key="carouselImage.name"

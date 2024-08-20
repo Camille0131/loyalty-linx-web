@@ -3,9 +3,9 @@ import { ref } from "vue";
 import PointsCard from "./PointsCard/PointsCard.vue";
 import PointsHistory from "./PointsCard/PointsHistory.vue";
 import Services from "./HomeCard/Services.vue";
-import ApplyCreditPath from "../assets/img/home/apply-svgrepo-com.svg";
-import PayCreditsPath from "../assets/img/home/pay-per-click-cursor-svgrepo-com.svg";
-import History from "../assets/img/home/history.svg";
+import ApplyCreditPath from "../assets/img/credits/invoice-apply-line-svgrepo-com.svg";
+import PayCreditsPath from "../assets/img/credits/pay-pal-paypal-payments-platform-svgrepo-com.svg";
+import StatusIcon from "../assets/img/credits/status-up-svgrepo-com.svg";
 
 import Merchants from "./merchants/Merchants.vue";
 const props = ["item, index"];
@@ -75,8 +75,8 @@ const servicesItem = ref([
   },
   {
     id: 3,
-    name: "History",
-    path: History,
+    name: "Loan Status",
+    path: StatusIcon,
   },
 ]);
 </script>
@@ -93,5 +93,7 @@ const servicesItem = ref([
     </ul>
   </template>
   <Services :services="servicesItem" />
-  <Merchants />
+  <div class="pb-22">
+    <Merchants />
+  </div>
 </template>

@@ -45,21 +45,23 @@ const handleMerchant = (name) => {
 };
 </script>
 <template>
-  <div class="p-4">
-    <h2 class="font-bold font-md m-1">Merchants</h2>
-    <div class="h-px w-full bg-slate-200"></div>
-  </div>
-  <div class="grid grid-cols-3 gap-3 mx-auto px-5 pb-22">
-    <button
-      @click="handleMerchant(merchantGroup.name)"
-      v-for="merchantGroup in merchantsGroup"
-      :key="merchantGroup.name"
-      class="bg-white rounded-md p-2 hover:bg-gray-50"
-    >
-      <div>
-        <img class="w-[5rem] mx-auto" :src="merchantGroup.path" alt="" />
-        <p class="font-semibold text-gray-700">{{ merchantGroup.name }}</p>
-      </div>
-    </button>
+  <div class="bg-white mx-3 py-2">
+    <div class="p-4">
+      <h2 class="font-bold font-md m-1">Merchants</h2>
+      <div class="h-px w-full bg-slate-200"></div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 mx-auto px-5">
+      <button
+        @click="handleMerchant(merchantGroup.name)"
+        v-for="merchantGroup in merchantsGroup"
+        :key="merchantGroup.name"
+        class="bg-white rounded-md p-2 hover:bg-gray-50"
+      >
+        <div>
+          <img class="w-[5rem] mx-auto" :src="merchantGroup.path" alt="" />
+          <p class="font-semibold text-gray-700">{{ merchantGroup.name }}</p>
+        </div>
+      </button>
+    </div>
   </div>
 </template>

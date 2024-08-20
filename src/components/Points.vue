@@ -2,7 +2,10 @@
 import { ref } from "vue";
 import PointsCard from "../components/PointsCard/PointsCard.vue";
 import PointsHistory from "./PointsCard/PointsHistory.vue";
-
+import Services from "./HomeCard/Services.vue";
+import ConvertPath from "../assets/img/points/bitcoin-convert-svgrepo-com.svg";
+import RedeemPath from "../assets/img/points/to-receive-points-svgrepo-com.svg";
+import ShopPath from "../assets/img/points/shop-2-svgrepo-com.svg";
 const props = defineProps(["item", "index"]);
 
 const balances = ref([
@@ -16,55 +19,122 @@ const balances = ref([
     ],
   },
 ]);
+const servicesItem = ref([
+  {
+    id: 1,
+    name: "Convert",
+    path: ConvertPath,
+  },
+  {
+    id: 2,
+    name: "Redeem ",
+    path: RedeemPath,
+  },
+  {
+    id: 3,
+    name: "Shop",
+    path: ShopPath,
+  },
+]);
 const brandDatas = ref([
   {
-    name: "Google",
-    visitors: 3.5,
-    revenues: "5,768",
-    sales: 590,
-    conversion: 4.8,
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 2, 2024 : 09:42 p.m",
+    action: "Chatime (Down Town Market) ",
   },
   {
-    name: "Twitter",
-    visitors: 2.2,
-    revenues: "4,635",
-    sales: 467,
-    conversion: 4.3,
+    name: "Purchase",
+    points: 2.2,
+    dateAndTime: "August 2, 2024 : 08:27 p.m",
+    action: "Chatime (Down Town Market)",
   },
   {
-    name: "Github",
-    visitors: 2.1,
-    revenues: "4,290",
-    sales: 420,
-    conversion: 3.7,
+    name: "Purchase",
+    points: 2.1,
+    dateAndTime: "August 4, 2024 : 06:34 a.m",
+    action: "Bearbrand (1.5 liter)",
   },
   {
-    name: "Vimeo",
-    visitors: 1.5,
-    revenues: "3,580",
-    sales: 389,
-    conversion: 2.5,
+    name: "Purchase",
+    points: 1.5,
+    dateAndTime: "July 18, 2024 : 07:12 a.m",
+    action: "Chicken Nuggets (Pure Foods)",
   },
   {
-    name: "Facebook",
-    visitors: 3.5,
-    revenues: "6,768",
-    sales: 390,
-    conversion: 4.2,
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 5, 2024 : 12:00 p.m",
+    action: "Sleepers (SM)",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "June 19, 2024 : 02:27 p.m",
+    action: "Hotdog (7/11)",
+  },
+  {
+    name: "Redemption",
+    points: 3.5,
+    dateAndTime: "July 21, 2024 : 05:42 a.m",
+    action: "From Groceries",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 4, 2024 : 10:21 p.m",
+    action: "Keyboard (SM)",
   },
 ]);
 </script>
 
 <template>
   <template v-for="balance in balances" :key="balance.id">
-    <ul class="flex flex-row justify-evenly">
-      <PointsCard
-        v-for="(balanceItem, index) in balance.balanceItems"
-        :key="index"
-        :item="balanceItem"
-        :index="index"
-      />
-    </ul>
-    <PointsHistory :brands="brandDatas" />
+    <div class="scroll-container">
+      <ul class="flex flex-row justify-evenly">
+        <PointsCard
+          v-for="(balanceItem, index) in balance.balanceItems"
+          :key="index"
+          :item="balanceItem"
+          :index="index"
+        />
+      </ul>
+      <div id="services-container ">
+        <Services :services="servicesItem" />
+        <div class="pb-[6rem]">
+          <PointsHistory :brands="brandDatas" />
+        </div>
+      </div>
+    </div>
   </template>
 </template>
+
+<style>
+::-webkit-scrollbar {
+  display: none;
+}
+.scroll-container {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* WebKit-based browsers */
+}
+
+#services-container {
+  margin: 0rem 1.1rem;
+}
+@media (min-width: 1100px) {
+  .scroll-container {
+    padding: 0rem 10rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #services-container {
+    padding: 0rem;
+  }
+}
+</style>

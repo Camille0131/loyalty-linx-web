@@ -6,6 +6,8 @@ import SideBarLayOut from "../../../layouts/SideBarLayOut.vue";
 
 <template>
   <DefaultLayouts>
-    <Points />
+    <div class="sm:px-2 md:px-12">
+      <Points />
+    </div>
   </DefaultLayouts>
 </template>

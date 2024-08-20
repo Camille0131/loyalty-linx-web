@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import HomeCardVue from "./HomeCard/HomeCard.vue";
 import HomeCarousel from "./HomeCard/HomeCarousel.vue";
-import DataStats from "./HomeCard/DataStats.vue";
-import TableHistory from "./tables/TableHistory.vue";
 import Services from "./HomeCard/Services.vue";
 import ApplyCreditPath from "../assets/img/home/loan-svgrepo-com.svg";
 import PayCreditsPath from "../assets/img/home/pay-per-click-cursor-svgrepo-com.svg";
@@ -62,33 +60,79 @@ const servicesItem = ref([
     path: MorePath,
   },
 ]);
+const brandDatas = ref([
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 2, 2024 : 09:42 p.m",
+    action: "Chatime (Down Town Market) ",
+  },
+  {
+    name: "Purchase",
+    points: 2.2,
+    dateAndTime: "August 2, 2024 : 08:27 p.m",
+    action: "Chatime (Down Town Market)",
+  },
+  {
+    name: "Purchase",
+    points: 2.1,
+    dateAndTime: "August 4, 2024 : 06:34 a.m",
+    action: "Bearbrand (1.5 liter)",
+  },
+  {
+    name: "Purchase",
+    points: 1.5,
+    dateAndTime: "July 18, 2024 : 07:12 a.m",
+    action: "Chicken Nuggets (Pure Foods)",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 5, 2024 : 12:00 p.m",
+    action: "Sleepers (SM)",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "June 19, 2024 : 02:27 p.m",
+    action: "Hotdog (7/11)",
+  },
+  {
+    name: "Redemption",
+    points: 3.5,
+    dateAndTime: "July 21, 2024 : 05:42 a.m",
+    action: "From Groceries",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 4, 2024 : 10:21 p.m",
+    action: "Keyboard (SM)",
+  },
+]);
 </script>
 
 <template>
-  <!-- <div class="p-2">
-    <h1 class="font-semibold">Whats new?</h1>
-    <h4 class="font-medium text-gray-600">
-      Experience and enjoy our exciting updates
-    </h4>
-  </div> -->
-  <!-- <div>
-    <HomeCarousel id="carousel" />
-  </div> -->
-  <template v-for="balance in balances" :key="balance.id">
-    <ul id="homeCard" class="flex flex-row justify-evenly">
-      <HomeCardVue
-        v-for="(balanceItem, index) in balance.balanceItems"
-        :key="index"
-        :item="balanceItem"
-        :index="index"
-      />
-    </ul>
-  </template>
+  <div class="container-services">
+    <template v-for="balance in balances" :key="balance.id">
+      <ul
+        id="homeCard"
+        class="bg-white mx-3 pb-6 rounded-sm flex flex-row justify-evenly"
+      >
+        <HomeCardVue
+          v-for="(balanceItem, index) in balance.balanceItems"
+          :key="index"
+          :item="balanceItem"
+          :index="index"
+          :brands="brandDatas"
+        />
+      </ul>
+    </template>
+    <Services :services="servicesItem" />
 
-  <Services :services="servicesItem" />
-
-  <div class="px-6">
-    <HomeCarousel />
+    <div class="mx-3">
+      <HomeCarousel />
+    </div>
   </div>
   <div class="h-[4rem]"></div>
 </template>
@@ -98,6 +142,11 @@ const servicesItem = ref([
   #carousel {
     margin: auto;
     width: 85%;
+  }
+}
+@media (min-width: 1100px) {
+  .container-services {
+    padding: 0rem 8rem;
   }
 }
 @media (max-width: 690px) {

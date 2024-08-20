@@ -2,9 +2,9 @@
 import { useRoute } from "vue-router";
 import { useNavBarStore } from "..//../stores/navbar";
 import { ref } from "vue";
-import TableHistory from "../tables/TableHistory.vue";
+import HistoryTable from "./HistoryTable.vue";
 import Services from "./Services.vue";
-const props = defineProps(["item", "index"]);
+const props = defineProps(["item", "index", "brands"]);
 </script>
 
 <template>
@@ -35,7 +35,7 @@ const props = defineProps(["item", "index"]);
               alt=""
             />
           </div>
-          <div>
+          <div id="buttonHistory">
             <a class="cursor-pointer">
               <p
                 class="flex justify-center bg-amber-700 text-[.8rem] rounded-md mt-2 text-white px-2 py-1 text-center hover:bg-amber-800"
@@ -52,15 +52,17 @@ const props = defineProps(["item", "index"]);
         </div>
       </div>
     </li>
-    <div>
+    <div class="w-full">
       <!-- <TableHistory /> -->
+      <HistoryTable id="table" :brands="brands" />
     </div>
-    <div class="w-full p-2 mb-4" id="table">
-      <div class="relative bg-white overflow-x-auto sm:rounded-lg">
-        <p class="font-semibold text-xl mt-4 mx-4">{{ item.name }}</p>
-        <TableHistory class="h-72" />
+    <!-- <div class="w-full mb-4" id="table">
+      <div class="relative overflow-x-auto sm:rounded-lg">
+        <p class="font-bold text-lg mt-4 mx-4">{{ item.name }}</p>
+        <div class="h-px w-[95%] mx-auto bg-slate-200"></div>
+
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -77,6 +79,11 @@ const props = defineProps(["item", "index"]);
   }
   #image {
     width: 20%;
+  }
+}
+@media (min-width: 995px) {
+  #buttonHistory {
+    display: none;
   }
 }
 </style>

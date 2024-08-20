@@ -6,6 +6,21 @@ import SideBarLayOut from "../../../layouts/SideBarLayOut.vue";
 
 <template>
   <DefaultLayouts>
-    <Credits />
+    <div class="containers">
+      <Credits />
+    </div>
   </DefaultLayouts>
 </template>
+
+<style>
+@media (min-width: 1000px) {
+  .containers {
+    padding: 0rem 5rem;
+  }
+}
+@media (min-width: 1400px) {
+  .containers {
+    padding: 0rem 20rem;
+  }
+}
+</style>

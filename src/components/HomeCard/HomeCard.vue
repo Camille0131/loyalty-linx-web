@@ -38,7 +38,7 @@ const props = defineProps(["item", "index"]);
           <div>
             <a class="cursor-pointer">
               <p
-                class="flex justify-center bg-amber-700 text-[.8rem] rounded-md mt-2 text-white px-2 py-1 text-center"
+                class="flex justify-center bg-amber-700 text-[.8rem] rounded-md mt-2 text-white px-2 py-1 text-center hover:bg-amber-800"
               >
                 <img
                   class="w-[1rem] mr-1"

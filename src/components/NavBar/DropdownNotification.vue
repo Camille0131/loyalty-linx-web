@@ -133,5 +133,7 @@ const notificationItems = ref([
   display: flex;
   align-items: center;
   margin: 0 auto;
+  right: 0rem;
+  margin-top: 2rem;
 }
 </style>

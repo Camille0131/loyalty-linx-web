@@ -5,14 +5,12 @@ const props = defineProps(["item", "index"]);
 </script>
 
 <template>
-  <div
-    class="w-full justify-center items-center flex flex-col rounded-md hover:shadow-xl"
-  >
+  <div class="w-full justify-center items-center flex flex-col rounded-md">
     <li
       href="#"
       class="block w-[90%] p-5 my-2 rounded-3xl bg-gradient-to-r from-amber-400 to-amber-600 border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
     >
-      <div>
+      <div v-if="item.progress">
         <h2 class="text-md font-bold text-gray-900 dark:text-white">
           Due Date
         </h2>

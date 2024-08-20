@@ -19,7 +19,7 @@ let confirmPasswordVisible = ref(false);
 let passwordVisible = ref(false);
 
 const iti = ref({});
-const urlRegister = "https://loyalty-linxapi.vercel.app/api/user/register";
+const urlRegister = "http://localhost:5000/api/user/register";
 
 // ----------------------- START OF COOKIE FUNCTION -----------------------
 
@@ -172,12 +172,12 @@ const validateMobileNo = () => {
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <div class="flex justify-center">
         <img
-          class="m-2 h-20 w-auto"
+          class="m-2 h-17 w-auto"
           src="/src/assets/img/authimages/loyaltilinx-web-favicon.png"
           alt="Workflow"
         />
         <span
-          class="self-center text-[3rem] font-semibold whitespace-nowrap dark:text-white"
+          class="self-center text-[2rem] font-bold whitespace-nowrap dark:text-white"
           >Loyalty Linx</span
         >
       </div>
@@ -197,8 +197,8 @@ const validateMobileNo = () => {
       </p>
     </div>
 
-    <div class="mt-8 sm:mx-auto sm:w-2/1 sm:max-w-md sm:mb-2">
-      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <div class="mt-8 sm:mx-auto sm:w-1/2 sm:max-w-md sm:mb-2 w-[80%] mx-auto">
+      <div class="bg-white rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form @submit.prevent="validateMobileNo" method="POST" action="#">
           <div>
             <label

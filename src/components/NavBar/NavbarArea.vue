@@ -12,6 +12,7 @@ import DropdownNotification from "./DropdownNotification.vue";
 onMounted(() => {
   initCollapses();
 });
+
 getUserProfileFromCookie();
 // const useAuthStore = authStore();
 

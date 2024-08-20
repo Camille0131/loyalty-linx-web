@@ -44,7 +44,7 @@ const activeIndex = ref(0);
 </script>
 
 <template>
-  <div class="p-2 bg-white">
+  <div class="p-2">
     <h2 class="font-bold">Whats new?</h2>
     <p class="text-[.8rem] md:text-[.9rem] font-semibold">
       Experience and join our exciting updates!

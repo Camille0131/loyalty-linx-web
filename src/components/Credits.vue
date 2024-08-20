@@ -3,6 +3,11 @@ import { ref } from "vue";
 import PointsCard from "./PointsCard/PointsCard.vue";
 import PointsHistory from "./PointsCard/PointsHistory.vue";
 import Services from "./HomeCard/Services.vue";
+import ApplyCreditPath from "../assets/img/home/apply-svgrepo-com.svg";
+import PayCreditsPath from "../assets/img/home/pay-per-click-cursor-svgrepo-com.svg";
+import History from "../assets/img/home/history.svg";
+
+import Merchants from "./merchants/Merchants.vue";
 const props = ["item, index"];
 
 const balances = ref([
@@ -56,6 +61,24 @@ const brandDatas = ref([
     conversion: 4.2,
   },
 ]);
+
+const servicesItem = ref([
+  {
+    id: 1,
+    name: "Apply",
+    path: ApplyCreditPath,
+  },
+  {
+    id: 2,
+    name: "Pay",
+    path: PayCreditsPath,
+  },
+  {
+    id: 3,
+    name: "History",
+    path: History,
+  },
+]);
 </script>
 
 <template>
@@ -69,5 +92,6 @@ const brandDatas = ref([
       />
     </ul>
   </template>
-  <Services />
+  <Services :services="servicesItem" />
+  <Merchants />
 </template>

@@ -4,8 +4,8 @@ import { useRouter } from "vue-router";
 import authStore from "../../stores/auth";
 import otp from "../../components/authentications/OTP.vue";
 
-const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
+const urlLogin = "http://localhost:5000/api/user/login";
+const urlProfile = "http://localhost:5000/api/user/profile";
 
 const email = ref("");
 const password = ref("");

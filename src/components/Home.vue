@@ -9,22 +9,23 @@ import CovertPointsPath from "../assets/img/home/exchange-svgrepo-com.svg";
 import RedeemPath from "../assets/img/home/gift-svgrepo-com.svg";
 import DiscoverDealsPath from "../assets/img/home/open-box-svgrepo-com.svg";
 import MorePath from "../assets/img/home/more-horizontal-svgrepo-com.svg";
-const balances = ref([
+import HistoryTable from "./HomeCard/HistoryTable.vue";
+import Card from "./HomeCard/Card.vue";
+const balancesCredits = ref([
   {
-    balanceItems: [
-      {
-        name: "Current credits history",
-        label: "Available credits",
-        value: "20,000.00",
-        id: 1,
-      },
-      {
-        name: "Points earned history",
-        label: "Available points",
-        value: "2,000.20",
-        id: 2,
-      },
-    ],
+    name: "Current credits history",
+    label: "Available credits",
+    value: "10,200.20",
+    id: 1,
+  },
+]);
+
+const balancesPoints = ref([
+  {
+    name: "Points earned history",
+    label: "Available points",
+    value: "2,000.20",
+    id: 2,
   },
 ]);
 
@@ -60,9 +61,60 @@ const servicesItem = ref([
     path: MorePath,
   },
 ]);
-const brandDatas = ref([
+
+const creditHistory = ref([
+  {
+    name: "Money transfer",
+    points: "3.5k",
+    dateAndTime: "August 2, 2024 : 09:42 p.m",
+    action: "Transfer money to (jp amando) ",
+  },
+  {
+    name: "Loan",
+    points: 2.2,
+    dateAndTime: "August 2, 2024 : 08:27 p.m",
+    action: "SM loan express",
+  },
   {
     name: "Purchase",
+    points: 2.1,
+    dateAndTime: "August 4, 2024 : 06:34 a.m",
+    action: "Bearbrand (1.5 liter)",
+  },
+  {
+    name: "Purchase",
+    points: 1.5,
+    dateAndTime: "July 18, 2024 : 07:12 a.m",
+    action: "Chicken Nuggets (Pure Foods)",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 5, 2024 : 12:00 p.m",
+    action: "Sleepers (SM)",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "June 19, 2024 : 02:27 p.m",
+    action: "Hotdog (7/11)",
+  },
+  {
+    name: "Redemption",
+    points: 3.5,
+    dateAndTime: "July 21, 2024 : 05:42 a.m",
+    action: "From Groceries",
+  },
+  {
+    name: "Purchase",
+    points: 3.5,
+    dateAndTime: "August 4, 2024 : 10:21 p.m",
+    action: "Keyboard (SM)",
+  },
+]);
+const pointsHistory = ref([
+  {
+    name: "Points",
     points: 3.5,
     dateAndTime: "August 2, 2024 : 09:42 p.m",
     action: "Chatime (Down Town Market) ",
@@ -114,18 +166,39 @@ const brandDatas = ref([
 
 <template>
   <div class="container-services">
-    <template v-for="balance in balances" :key="balance.id">
+    <template v-for="balance in balancesCredits" :key="balance.id">
       <ul
         id="homeCard"
         class="bg-white mx-3 pb-6 rounded-sm flex flex-row justify-evenly"
       >
-        <HomeCardVue
-          v-for="(balanceItem, index) in balance.balanceItems"
-          :key="index"
-          :item="balanceItem"
-          :index="index"
-          :brands="brandDatas"
-        />
+        <div
+          id="container"
+          class="px-2 justify-center rounded-2xl items-center flex flex-col mt-3"
+        >
+          <Card
+            v-for="(balanceItem, index) in balancesCredits"
+            :key="index"
+            :item="balanceItem"
+            :index="index"
+          />
+          <div class="w-full flex flex-row">
+            <HistoryTable id="table" :brands="creditHistory" />
+          </div>
+        </div>
+        <div
+          id="container"
+          class="px-2 justify-center rounded-2xl items-center flex flex-col mt-3"
+        >
+          <Card
+            v-for="(balancePoint, index) in balancesPoints"
+            :key="index"
+            :item="balancePoint"
+            :index="index"
+          />
+          <div class="w-full flex flex-row">
+            <HistoryTable id="table" :brands="pointsHistory" />
+          </div>
+        </div>
       </ul>
     </template>
     <Services :services="servicesItem" />

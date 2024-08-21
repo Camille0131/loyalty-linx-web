@@ -4,7 +4,7 @@ import { useNavBarStore } from "..//../stores/navbar";
 import { ref } from "vue";
 import HistoryTable from "./HistoryTable.vue";
 import Services from "./Services.vue";
-const props = defineProps(["item", "index", "brands"]);
+const props = defineProps(["item", "index", "points", "credits"]);
 </script>
 
 <template>
@@ -52,10 +52,10 @@ const props = defineProps(["item", "index", "brands"]);
         </div>
       </div>
     </li>
-    <div class="w-full">
-      <!-- <TableHistory /> -->
-      <HistoryTable id="table" :brands="brands" />
-    </div>
+    <!-- <div class="w-full"> -->
+    <!-- <TableHistory /> -->
+    <!-- <HistoryTable id="table" :brands="credits" />
+    </div> -->
     <!-- <div class="w-full mb-4" id="table">
       <div class="relative overflow-x-auto sm:rounded-lg">
         <p class="font-bold text-lg mt-4 mx-4">{{ item.name }}</p>

@@ -8,7 +8,6 @@ import PayCreditsPath from "../assets/img/credits/pay-pal-paypal-payments-platfo
 import StatusIcon from "../assets/img/credits/status-up-svgrepo-com.svg";
 
 import Merchants from "./merchants/Merchants.vue";
-const props = ["item, index"];
 
 const balances = ref([
   {

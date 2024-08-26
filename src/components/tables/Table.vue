@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
-
-const props = defineProps(["brand", "index"]);
+const props = defineProps(["data", "index"]);
 </script>
 
 <template>
@@ -9,7 +8,7 @@ const props = defineProps(["brand", "index"]);
     <div
       :class="` flex flex-row my-3   rounded-sm bg-white sm:grid-cols-3 hover:bg-gray-50 
       ${
-        index === brand.length - 1
+        index === data.length - 1
           ? ''
           : 'border-b border-stroke dark:border-strokedark'
       }`"
@@ -29,15 +28,17 @@ const props = defineProps(["brand", "index"]);
           <p
             class="text-gray-700 text-lg font-semibold dark:text-white sm:block"
           >
-            {{ brand.name }}
+            {{ data.name }}
           </p>
         </div>
         <div>
-          <p class="text-black dark:text-white sm:block">{{ brand.action }}</p>
+          <p class="text-black dark:text-white text-sm sm:block">
+            {{ data.action }}
+          </p>
         </div>
         <div>
-          <p class="text-gray-500 text-sm dark:text-white sm:block">
-            {{ brand.dateAndTime }}
+          <p class="text-gray-500 text-s m dark:text-white sm:block">
+            {{ data.dateAndTime }}
           </p>
         </div>
       </div>
@@ -45,7 +46,7 @@ const props = defineProps(["brand", "index"]);
       <div
         class="flex flex-2 items-center justify-center text-center p-2.5 xl:p-5"
       >
-        <p class="text-black dark:text-white">+{{ brand.points }}</p>
+        <p class="text-black dark:text-white">+{{ data.points }}</p>
       </div>
     </div>
   </div>

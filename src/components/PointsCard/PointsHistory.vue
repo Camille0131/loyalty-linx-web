@@ -15,7 +15,7 @@ const props = defineProps(["brands"]);
           <div class="h-px w-full bg-slate-200"></div>
         </div>
         <div v-for="(brand, index) in brands" :key="brand.name">
-          <Pointstable :brand="brand" :key="index" />
+          <Pointstable :data="brand" :key="index" />
         </div>
       </div>
     </div>

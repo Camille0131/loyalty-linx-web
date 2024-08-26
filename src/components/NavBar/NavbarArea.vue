@@ -1,11 +1,7 @@
 <script setup>
-// import { useNavbarStore } from "../../stores/navbar";
-
 import DropDownUser from "./UserDrop.vue";
 import { ref, onMounted } from "vue";
-import NavbarItem from "./NavbarItem.vue";
 import { useRouter } from "vue-router";
-import authStore from "../../stores/auth";
 import { initCollapses } from "flowbite";
 import DropdownNotification from "./DropdownNotification.vue";
 
@@ -23,30 +19,6 @@ let profilePhoto = ref("");
 
 // const navbarStore = useNavbarStore();
 const router = useRouter();
-
-const menuGroups = ref([
-  {
-    name: "MENU",
-    menutItems: [
-      {
-        label: "Home",
-        route: "/home",
-      },
-      {
-        label: "Points",
-        route: "/points",
-      },
-      {
-        label: "Credits",
-        route: "/credits",
-      },
-      {
-        label: "Profile",
-        route: "/profile",
-      },
-    ],
-  },
-]);
 
 async function getCookieAsync(name) {
   return new Promise((resolve, reject) => {

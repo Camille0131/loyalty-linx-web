@@ -166,7 +166,7 @@ const handleSubmit = async (e) => {
     >
       <div class="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full">
         <div
-          class="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] sm:w-full"
+          class="border mx-auto border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] sm:w-full"
         >
           <form class="space-y-4" @submit.prevent="handleSubmit">
             <div class="flex justify-center">

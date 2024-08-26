@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from "vue";
-import HomeCardVue from "./HomeCard/HomeCard.vue";
+import { ref, onMounted } from "vue";
+
+import { initModals } from "flowbite";
 import HomeCarousel from "./HomeCard/HomeCarousel.vue";
 import Services from "./HomeCard/Services.vue";
 import ApplyCreditPath from "../assets/img/home/loan-svgrepo-com.svg";
@@ -11,6 +12,8 @@ import DiscoverDealsPath from "../assets/img/home/open-box-svgrepo-com.svg";
 import MorePath from "../assets/img/home/more-horizontal-svgrepo-com.svg";
 import HistoryTable from "./HomeCard/HistoryTable.vue";
 import Card from "./HomeCard/Card.vue";
+import TransactionHistoryModal from "./modal/TransactionHistoryModal.vue";
+
 const balancesCredits = ref([
   {
     name: "Current credits history",
@@ -112,6 +115,7 @@ const creditHistory = ref([
     action: "Keyboard (SM)",
   },
 ]);
+
 const pointsHistory = ref([
   {
     name: "Points",
@@ -162,15 +166,21 @@ const pointsHistory = ref([
     action: "Keyboard (SM)",
   },
 ]);
+
+const props = {
+  item: Object,
+  index: Number,
+  history: Array,
+};
 </script>
 
 <template>
   <div class="container-services">
-    <template v-for="balance in balancesCredits" :key="balance.id">
-      <ul
-        id="homeCard"
-        class="bg-white mx-3 pb-6 rounded-sm flex flex-row justify-evenly"
-      >
+    <ul
+      id="homeCard"
+      class="bg-white mx-3 pb-6 rounded-sm flex flex-row justify-evenly"
+    >
+      <template v-for="balance in balancesCredits" :key="balance.id">s
         <div
           id="container"
           class="px-2 justify-center rounded-2xl items-center flex flex-col mt-3"
@@ -180,11 +190,15 @@ const pointsHistory = ref([
             :key="index"
             :item="balanceItem"
             :index="index"
+            :history="creditHistory"
           />
+
           <div class="w-full flex flex-row">
-            <HistoryTable id="table" :brands="creditHistory" />
+            <HistoryTable id="table" :history="creditHistory" />
           </div>
         </div>
+      </template>
+      <template v-for="history in balancesPoints" :key="history.name">
         <div
           id="container"
           class="px-2 justify-center rounded-2xl items-center flex flex-col mt-3"
@@ -194,14 +208,16 @@ const pointsHistory = ref([
             :key="index"
             :item="balancePoint"
             :index="index"
+            :history="pointsHistory"
           />
           <div class="w-full flex flex-row">
-            <HistoryTable id="table" :brands="pointsHistory" />
+            <HistoryTable id="table" :history="pointsHistory" />
           </div>
         </div>
-      </ul>
-    </template>
+      </template>
+    </ul>
     <Services :services="servicesItem" />
+    <!-- <TransactionHistoryModal /> -->
 
     <div class="mx-3">
       <HomeCarousel />

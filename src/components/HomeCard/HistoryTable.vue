@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import Table from "../tables/Table.vue";
-const props = defineProps(["brands"]);
+const props = defineProps(["history"]);
 </script>
 
 <template>
@@ -14,8 +14,8 @@ const props = defineProps(["brands"]);
           <h2 class="font-bold font-md m-1">History</h2>
           <div class="h-px w-full bg-slate-200"></div>
         </div>
-        <div v-for="(brand, index) in brands" :key="brand.name">
-          <Table :brand="brand" :key="index" />
+        <div v-for="(item, index) in history" :key="item.name">
+          <Table :data="item" :key="index" />
         </div>
       </div>
     </div>

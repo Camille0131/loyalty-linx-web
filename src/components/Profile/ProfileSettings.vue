@@ -188,14 +188,14 @@ const profileMenu = ref([
             {{ `${item.firstName} ${item.lastName} ` }}
           </h3>
           <button v-if="item.verification?.isVerified">
-            <p class="font-md">Verified</p>
+            <p class="font-md text-sm font-semibold">Verified</p>
           </button>
           <button
             class="border border-gray-400 p-2 rounded-md"
             @click="handleVerification"
             v-else-if="!item.verification?.isVerified"
           >
-            <p class="font-md">Verify now!</p>
+            <p class="font-md text-sm font-semibold">Verify now!</p>
           </button>
           <div v-for="item in profileMenu" :key="item.id" class="py-2 mt-2">
             <button

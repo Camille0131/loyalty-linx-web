@@ -5,6 +5,7 @@ import index from "./router/index";
 import { createPinia } from "pinia";
 import "sweetalert2/src/sweetalert2.scss";
 
+
 const app = createApp(App);
 const pinia = createPinia();
 

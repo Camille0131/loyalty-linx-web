@@ -180,8 +180,7 @@ const props = {
       id="homeCard"
       class="bg-white mx-3 pb-6 rounded-sm flex flex-row justify-evenly"
     >
-      <template v-for="balance in balancesCredits" :key="balance.id"
-        >s
+      <template v-for="balance in balancesCredits" :key="balance.id">
         <div
           id="container"
           class="px-2 justify-center rounded-2xl items-center flex flex-col mt-3"

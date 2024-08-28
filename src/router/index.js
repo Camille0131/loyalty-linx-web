@@ -42,7 +42,7 @@ const routes = [
     component: Dashboard,
     meta: {
       title: "Home",
-      requiresAuth: true,
+      // requiresAuth: true,
     },
   },
   {
@@ -51,7 +51,7 @@ const routes = [
     component: Credits,
     meta: {
       title: "Credits",
-      requiresAuth: true,
+      // requiresAuth: true,
     },
   },
   {
@@ -60,7 +60,7 @@ const routes = [
     component: Points,
     meta: {
       title: "Points",
-      requiresAuth: true,
+      // requiresAuth: true,
     },
   },
   {
@@ -69,7 +69,7 @@ const routes = [
     component: ServicesView,
     meta: {
       title: "Profile",
-      requiresAuth: true,
+      // requiresAuth: true,
     },
   },
   {
@@ -91,33 +91,33 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authStoreInstance = authStore();
-  const isAuthenticated = authStoreInstance.isAuthenticated;
-  const token = localStorage.getItem("a_TOK");
+  // const authStoreInstance = authStore();
+  // const isAuthenticated = authStoreInstance.isAuthenticated;
+  // const token = localStorage.getItem("a_TOK");
   document.title = `Loyalty linx ${to.meta.title} | your trust partner in businesss `;
 
-  if (to.meta.requiresAuth && !isAuthenticated && !token) {
-    // If the route requires authentication and the user is not authenticated, redirect to signin
-    return next({ path: "/signin", query: { redirect: to.fullPath } });
-  }
+  // if (to.meta.requiresAuth && !isAuthenticated && !token) {
+  //   // If the route requires authentication and the user is not authenticated, redirect to signin
+  //   return next({ path: "/signin", query: { redirect: to.fullPath } });
+  // }
 
-  if (isAuthenticated && to.path === "/signin") {
-    // If the user is already authenticated and tries to access signin, redirect to home
-    return next({ path: "/home" });
-  }
+  // if (isAuthenticated && to.path === "/signin") {
+  //   // If the user is already authenticated and tries to access signin, redirect to home
+  //   return next({ path: "/home" });
+  // }
 
-  if (isAuthenticated && to.path === "/register") {
-    // If the user is already authenticated and tries to access register, redirect to current page
-    return next({ path: "/home" });
-  }
+  // if (isAuthenticated && to.path === "/register") {
+  //   // If the user is already authenticated and tries to access register, redirect to current page
+  //   return next({ path: "/home" });
+  // }
 
-  if (token && !isAuthenticated) {
-    // If the user has a token, assume they are authenticated
-    authStoreInstance.isAuthenticated = true;
-    authStoreInstance.token = token;
-    // Redirect to /home if the user has a valid token
-    return next({ path: to.path });
-  }
+  // if (token && !isAuthenticated) {
+  //   // If the user has a token, assume they are authenticated
+  //   authStoreInstance.isAuthenticated = true;
+  //   authStoreInstance.token = token;
+  //   // Redirect to /home if the user has a valid token
+  //   return next({ path: to.path });
+  // }
 
   next();
 });

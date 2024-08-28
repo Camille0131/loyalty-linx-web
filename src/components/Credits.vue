@@ -6,8 +6,11 @@ import Services from "./HomeCard/Services.vue";
 import ApplyCreditPath from "../assets/img/credits/invoice-apply-line-svgrepo-com.svg";
 import PayCreditsPath from "../assets/img/credits/pay-pal-paypal-payments-platform-svgrepo-com.svg";
 import StatusIcon from "../assets/img/credits/status-up-svgrepo-com.svg";
+import { useUserStore } from "../stores/user";
 
 import Merchants from "./merchants/Merchants.vue";
+const userStore = useUserStore();
+const token = userStore.token;
 
 const balances = ref([
   {
@@ -81,6 +84,7 @@ const servicesItem = ref([
 </script>
 
 <template>
+  <button @click="console.log(token)">TOKEN CLG</button>
   <template v-for="balance in balances" :key="balance.id">
     <ul class="flex flex-row justify-evenly">
       <PointsCard

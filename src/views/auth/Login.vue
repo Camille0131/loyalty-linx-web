@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { callWithErrorHandling, ref } from "vue";
 import { useRouter } from "vue-router";
 import authStore from "../../stores/auth";
 import otp from "../../components/authentications/OTP.vue";
+import { useUserStore } from "../../stores/user";
 
 const urlLogin = "http://localhost:5000/api/user/login";
 const urlProfile = "http://localhost:5000/api/user/profile";
@@ -13,6 +14,8 @@ const error = ref(null);
 const router = useRouter();
 const token = ref(null);
 const generetedOtp = ref("");
+
+const userStore = useUserStore();
 
 let passwordVisible = ref(false);
 const handlePasswordVisible = () => (passwordVisible.value ^= true);
@@ -58,48 +61,6 @@ async function saveUserData(data, name) {
     console.error("Error saving cookie:", error);
   }
 }
-
-// Start of Get User Profile API request
-const getUserProfile = async (token) => {
-  try {
-    const response = await fetch(urlProfile, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.ok) {
-      const authStores = authStore();
-
-      // Handle data store response from API request SIGNIN
-      const data = await response.json();
-      saveUserData(data.userProfile, "u_PRO");
-      authStores.login();
-      router.push("/home");
-    } else {
-      error.value = "Error fetching user profile";
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-// End of Get User Profile API request
-
-const generatedToken = () => {
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const tokenLength = 18; // adjust the length of the token as needed
-  let token = "";
-
-  for (let i = 0; i < tokenLength; i++) {
-    token += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-
-  return token;
-};
-
 // Start of Signin function
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -131,7 +92,8 @@ const handleSubmit = async (e) => {
           query: { gen: generetedOtp.value },
         });
       } else {
-        getUserProfile(data.token);
+        await getUserProfile(data.token);
+        userStore.setToken(data.token);
       }
 
       // Get user profile data
@@ -156,6 +118,48 @@ const handleSubmit = async (e) => {
       error.value = "Error setting up the request";
     }
   }
+};
+
+// Start of Get User Profile API request
+const getUserProfile = async (token) => {
+  try {
+    const response = await fetch(urlProfile, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      // const authStores = authStore();
+
+      // Handle data store response from API request SIGNIN
+      const data = await response.json();
+
+      saveUserData(data.userProfile, "u_PRO");
+      // authStores.login();
+      router.push("/home");
+    } else {
+      error.value = "Error fetching user profile";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+// End of Get User Profile API request
+
+const generatedToken = () => {
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const tokenLength = 18; // adjust the length of the token as needed
+  let token = "";
+
+  for (let i = 0; i < tokenLength; i++) {
+    token += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  return token;
 };
 </script>
 

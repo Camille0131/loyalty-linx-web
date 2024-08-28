@@ -84,7 +84,7 @@ const servicesItem = ref([
 </script>
 
 <template>
-  <button @click="console.log(token)">TOKEN CLG</button>
+  <!-- <button @click="console.log(token)">TOKEN CLG</button> -->
   <template v-for="balance in balances" :key="balance.id">
     <ul class="flex flex-row justify-evenly">
       <PointsCard

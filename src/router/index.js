@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
 import Landing from "../views/Landing.vue";
 import Dashboard from "../views/pages/user/Dashboard.vue";
 import Credits from "../views/pages/user/CreditsView.vue";
@@ -83,7 +87,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
+
+  // history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   // scrollBehavior(to, from, savePosition) {
   //   return savedPosition || { left: 0, top: 0 };

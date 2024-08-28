@@ -132,13 +132,13 @@ const getUserProfile = async (token) => {
     });
 
     if (response.ok) {
-      // const authStores = authStore();
+      const authStores = authStore();
 
       // Handle data store response from API request SIGNIN
       const data = await response.json();
 
       saveUserData(data.userProfile, "u_PRO");
-      // authStores.login();
+      authStores.login();
       router.push("/home");
     } else {
       error.value = "Error fetching user profile";

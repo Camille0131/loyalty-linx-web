@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from 'vue'
 // @ts-ignore
 import from 'vue3-apexcharts'
@@ -191,4 +191,4 @@ const apexOptions = {
       </div>
     </div>
   </div>
-</template>
+</template> -->

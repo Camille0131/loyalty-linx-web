@@ -169,36 +169,35 @@ const validateMobileNo = () => {
   <div
     class="min-h-screen bg-gray-50 flex flex-col justify-center py-5 sm:px-6 lg:px-8"
   >
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <div class="flex justify-center">
-        <img
-          class="m-2 h-17 w-auto"
-          src="/src/assets/img/authimages/loyaltilinx-web-favicon.png"
-          alt="Workflow"
-        />
-        <span
-          class="self-center text-[2rem] font-bold whitespace-nowrap dark:text-white"
-          >Loyalty Linx</span
-        >
-      </div>
-      <!-- <h2
+    <div class="mt-8 sm:mx-auto sm:w-1/2 sm:max-w-md sm:mb-2 w-[90%] mx-auto">
+      <div class="bg-white rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+          <div class="flex justify-center">
+            <img
+              class="m-2 h-17 w-auto"
+              src="/src/assets/img/authimages/loyaltilinx-web-favicon.png"
+              alt="Workflow"
+            />
+            <span
+              class="self-center text-[2rem] font-bold whitespace-nowrap dark:text-white"
+              >Loyalty Linx</span
+            >
+          </div>
+          <!-- <h2
         class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900"
       >
         Create a new account
       </h2> -->
-      <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
-        Or
-        <RouterLink
-          to="/signin"
-          class="font-medium text-amber-600 hover:text-amber-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-        >
-          login to your account
-        </RouterLink>
-      </p>
-    </div>
-
-    <div class="mt-8 sm:mx-auto sm:w-1/2 sm:max-w-md sm:mb-2 w-[80%] mx-auto">
-      <div class="bg-white rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <p class="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+            Or
+            <RouterLink
+              to="/signin"
+              class="font-medium text-amber-600 hover:text-amber-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+            >
+              login to your account
+            </RouterLink>
+          </p>
+        </div>
         <form @submit.prevent="validateMobileNo" method="POST" action="#">
           <div>
             <label

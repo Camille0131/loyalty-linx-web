@@ -306,7 +306,7 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-"apexcharts@> 3.0.0":
+apexcharts@^3.53.0, "apexcharts@> 3.0.0":
   version "3.53.0"
   resolved "https://registry.npmjs.org/apexcharts/-/apexcharts-3.53.0.tgz"
   integrity sha512-QESZHZY3w9LPQ64PGh1gEdfjYjJ5Jp+Dfy0D/CLjsLOPTpXzdxwlNMqRj+vPbTcP0nAHgjWv1maDqcEq6u5olw==
@@ -1310,7 +1310,7 @@ vue-tel-input@^9.1.4:
     "@vue/server-renderer" "3.4.38"
     "@vue/shared" "3.4.38"
 
-vue3-apexcharts@^1.5.3:
+vue3-apexcharts@^1.6.0:
   version "1.6.0"
   resolved "https://registry.npmjs.org/vue3-apexcharts/-/vue3-apexcharts-1.6.0.tgz"
   integrity sha512-gemKFXpw4TuVcllwyKJGYjTwiJQxxCUwbXsiiEEZjs0zc9jvOHvreN8frXz7QbnYqMqOHF9D1TBqwENvoPNjLw==

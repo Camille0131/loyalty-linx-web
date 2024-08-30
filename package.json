@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.11.1",
+    "apexcharts": "^3.53.0",
     "axios": "^1.7.5",
     "crypto-js": "^4.2.0",
     "flowbite": "^2.5.1",
@@ -21,7 +22,7 @@
     "vue": "^3.4.31",
     "vue-router": "4",
     "vue-tel-input": "^9.1.4",
-    "vue3-apexcharts": "^1.5.3"
+    "vue3-apexcharts": "^1.6.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",

@@ -1,52 +1,53 @@
-<!-- <script setup lang="ts">
-import { ref } from 'vue'
-// @ts-ignore
-import VueApexCharts from 'vue3-apexcharts'
+<script setup lang="ts">
+// import { ref } from 'vue'
+// // @ts-ignore
+// import VueApexCharts from 'vue3-apexcharts'
 
-const chartData = {
-  series: [65, 34, 45, 12],
-  labels: ['Desktop', 'Tablet', 'Mobile', 'Unknown']
-}
+// const chartData = {
+//   series: [65, 34, 45, 12],
+//   labels: ['Desktop', 'Tablet', 'Mobile', 'Unknown']
+// }
 
-const chart = ref(null)
+// const chart = ref(null)
 
-const apexOptions = {
-  chart: {
-    type: 'donut',
-    width: 380
-  },
-  colors: ['#3C50E0', '#6577F3', '#8FD0EF', '#0FADCF'],
-  labels: chartData.labels,
-  legend: {
-    show: false,
-    position: 'bottom'
-  },
-  plotOptions: {
-    pie: {
-      donut: {
-        size: '65%',
-        background: 'transparent'
-      }
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  responsive: [
-    {
-      breakpoint: 640,
-      options: {
-        chart: {
-          width: 200
-        }
-      }
-    }
-  ]
-}
+// const apexOptions = {
+//   chart: {
+//     type: 'donut',
+//     width: 380
+//   },
+//   colors: ['#3C50E0', '#6577F3', '#8FD0EF', '#0FADCF'],
+//   labels: chartData.labels,
+//   legend: {
+//     show: false,
+//     position: 'bottom'
+//   },
+//   plotOptions: {
+//     pie: {
+//       donut: {
+//         size: '65%',
+//         background: 'transparent'
+//       }
+//     }
+//   },
+//   dataLabels: {
+//     enabled: false
+//   },
+//   responsive: [
+//     {
+//       breakpoint: 640,
+//       options: {
+//         chart: {
+//           width: 200
+//         }
+//       }
+//     }
+//   ]
+// }
 </script>
 
 <template>
-  <div
+  <div></div>
+  <!-- <div
     class="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-5"
   >
     <div class="mb-3 justify-between gap-4 sm:flex">
@@ -135,5 +136,5 @@ const apexOptions = {
         </div>
       </div>
     </div>
-  </div>
-</template> -->
+  </div> -->
+</template>

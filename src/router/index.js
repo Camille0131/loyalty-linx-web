@@ -3,7 +3,7 @@ import {
   createWebHistory,
   createWebHashHistory,
 } from "vue-router";
-import Landing from "../views/Landing.vue";
+import Landing from "../views/LandingView.vue";
 import Dashboard from "../views/pages/user/Dashboard.vue";
 import Credits from "../views/pages/user/CreditsView.vue";
 import Points from "../views/pages/user/PointsView.vue";
@@ -14,14 +14,14 @@ import Verification from "../views/auth/Verification.vue";
 const routes = [
   {
     path: "/",
-    component: () => import("../views/auth/Login.vue"),
+    component: Landing,
     meta: {
-      title: "Sign In",
+      title: "",
     },
   },
   {
     path: "/signin",
-    component: () => import("../views/auth/Login.vue"),
+    component: () => import("../views/auth/LoginView.vue"),
     meta: {
       title: "Sign In",
     },
@@ -78,18 +78,21 @@ const routes = [
   },
   {
     path: "/register",
-    component: () => import("../views/auth/Register.vue"),
+    component: () => import("../views/auth/RegisterView.vue"),
   },
   {
     path: "/user/dashboard",
     component: () => import("../views/pages/user/Dashboard.vue"),
+  },
+  {
+    path: "/register/merchant",
+    component: () => import("../views/auth/RegisterMerchantView.vue"),
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
 
-  // history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   // scrollBehavior(to, from, savePosition) {
   //   return savedPosition || { left: 0, top: 0 };
@@ -100,7 +103,7 @@ router.beforeEach((to, from, next) => {
   const authStoreInstance = authStore();
   const isAuthenticated = authStoreInstance.isAuthenticated;
   const token = localStorage.getItem("a_TOK");
-  document.title = `Loyalty linx ${to.meta.title} | your trust partner in businesss `;
+  document.title = `Loyalty linx ${to.meta.title} | Your trust partner in businesss `;
 
   if (to.meta.requiresAuth && !isAuthenticated && !token) {
     // If the route requires authentication and the user is not authenticated, redirect to signin

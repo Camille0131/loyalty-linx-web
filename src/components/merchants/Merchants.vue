@@ -7,6 +7,8 @@ import super8 from "../../assets/img/merchants/super8.jpg";
 import sm from "../../assets/img/merchants/sm.png";
 import walmart from "../../assets/img/merchants/walmart.png";
 
+const props = defineProps(["item"]);
+
 const merchantsGroup = ref([
   {
     name: "jollibee",
@@ -52,16 +54,31 @@ const handleMerchant = (name) => {
     </div>
     <div class="grid grid-cols-3 gap-3 mx-auto px-5">
       <button
-        @click="handleMerchant(merchantGroup.name)"
-        v-for="merchantGroup in merchantsGroup"
-        :key="merchantGroup.name"
+        @click="handleMerchant(merchantGroup.storeName)"
+        v-for="merchantGroup in item"
+        :key="merchantGroup.storeName"
         class="bg-white rounded-md p-2 hover:bg-gray-50"
       >
         <div>
-          <img class="w-[5rem] mx-auto" :src="merchantGroup.path" alt="" />
-          <p class="font-semibold text-gray-700">{{ merchantGroup.name }}</p>
+          <img
+            class="w-[5rem] mx-auto"
+            :src="merchantGroup.profilePicture"
+            alt=""
+          />
+          <p id="name" class="font-semibold text-sm text-gray-700">
+            {{ merchantGroup.storeName }}
+          </p>
         </div>
       </button>
     </div>
   </div>
 </template>
+
+<style>
+#name {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

@@ -1,7 +1,7 @@
 <script setup>
-import Landing from "./views/Landing.vue";
-import login from "./views/auth/Login.vue";
-import register from "./views/auth/Register.vue";
+import Landing from "./views/LandingView.vue";
+import login from "./views/auth/LoginView.vue";
+import register from "./views/auth/RegisterView.vue";
 import { RouterView } from "vue-router";
 </script>
 

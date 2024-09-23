@@ -21,6 +21,7 @@ const routes = [
   },
   {
     path: "/signin",
+    name: "signin",
     component: () => import("../views/auth/LoginView.vue"),
     meta: {
       title: "Sign In",
@@ -78,15 +79,149 @@ const routes = [
   },
   {
     path: "/register",
+    name: "register",
     component: () => import("../views/auth/RegisterView.vue"),
   },
   {
     path: "/user/dashboard",
+    name: "dashboard",
     component: () => import("../views/pages/user/Dashboard.vue"),
   },
   {
     path: "/register/merchant",
+    name: "merchants",
     component: () => import("../views/auth/RegisterMerchantView.vue"),
+  },
+  {
+    path: "/application/credit",
+    name: "apply/credit",
+    component: () => import("../components/ApplyCredit/ApplicationForm.vue"),
+    meta: {
+      title: "Apply",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/forgotpassword",
+    name: "forgotpassword",
+    component: () => import("../views/auth/ForgotPasswordView.vue"),
+  },
+  {
+    path: "/forgotpassword/verification",
+    name: "forgotpassword/otp",
+    component: () =>
+      import("../components/ForgotPassword/ForgotPasswordOtp.vue"),
+  },
+  {
+    path: "/resetpassword",
+    name: "resetpassword",
+    component: () => import("../components/ForgotPassword/ChangePassword.vue"),
+  },
+  {
+    path: "/passcode",
+    name: "passcode",
+    component: () => import("../components/registration/RegisterPassword.vue"),
+  },
+  {
+    path: "/confirmpasscode",
+    name: "confirmpasscode",
+    component: () =>
+      import("../components/registration/RegisterConfirmPasscode.vue"),
+  },
+  {
+    path: "/link/passcode",
+    name: "link/passcode",
+    component: () => import("../views/auth/PassCode.vue"),
+  },
+  {
+    path: "/loan/status",
+    name: "loan/status",
+    component: () => import("../components/ApplyCredit/LoanStatusLanding.vue"),
+    meta: {
+      title: "Credit status",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/qr",
+    name: "qr code",
+    component: () => import("../views/pages/user/QrView.vue"),
+    meta: {
+      title: "Credit status",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/loan/monitor",
+    name: "loan/monitor",
+    component: () => import("../components/ApplyCredit/LoanStatus.vue"),
+    meta: {
+      title: "Credit monitor",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/choose/id",
+    name: "choose/id",
+    component: () => import("../views/pages/user/ChooseIdView.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/take/id",
+    name: "take/id",
+    component: () => import("../components/Verification/TakeIdPhoto.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/preview/id/:photo",
+    name: "preview/id",
+    component: () => import("../components/Verification/ModalPreview.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/take/selfie/id/",
+    name: "take/selfie/id",
+    component: () => import("../components/Verification/TakeSelfie.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/selfie/preview/:photo",
+    name: "selfie/preview",
+    component: () => import("../components/Verification/SelfiePreview.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/fill/information",
+    name: "fill/information",
+    component: () => import("../components/Verification/MoreInfo.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/fill/confirmation",
+    name: "fill/confirmation",
+    component: () => import("../components/Verification/Confirmation.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
   },
 ];
 
@@ -99,6 +234,17 @@ const router = createRouter({
   // },
 });
 
+let timeoutId = null;
+let inactivityTimeout = 600000; // 10 minutes in milliseconds
+document.addEventListener("click", resetInactivityTimer);
+document.addEventListener("keydown", resetInactivityTimer);
+
+function resetInactivityTimer() {
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => {
+    router.push({ path: "/link/passcode" });
+  }, inactivityTimeout);
+}
 router.beforeEach((to, from, next) => {
   const authStoreInstance = authStore();
   const isAuthenticated = authStoreInstance.isAuthenticated;
@@ -128,6 +274,19 @@ router.beforeEach((to, from, next) => {
     return next({ path: to.path });
   }
 
+  if (token && to.path === "/") {
+    return next({ path: "/link/passcode" });
+  }
+  clearTimeout(timeoutId);
+
+  if (token) {
+    timeoutId = setTimeout(() => {
+      router.push({ path: "/link/passcode" });
+    }, inactivityTimeout);
+  }
+  // Set the inactivity timer
+
+  // 600000
   next();
 });
 

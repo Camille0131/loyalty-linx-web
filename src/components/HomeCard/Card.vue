@@ -26,7 +26,7 @@ const unHideModal = () => {
 
 <template>
   <li
-    class="w-full py-5 pt-6 px-4 bg-gradient-to-r from-amber-400 to-amber-600 border border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    class="w-full py-5 pt-6 px-4 bg-gradient-to-r from-amber-400 to-amber-600 border-gray-200 rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <div class="flex flex-row justify-between">
       <div>

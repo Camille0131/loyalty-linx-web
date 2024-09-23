@@ -4,6 +4,7 @@ import "intl-tel-input/build/css/intlTelInput.css";
 import intlTelInput from "intl-tel-input";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
+import { el } from "intl-tel-input/i18n";
 
 const router = useRouter();
 const mobileNo = ref("");
@@ -19,7 +20,9 @@ let confirmPasswordVisible = ref(false);
 let passwordVisible = ref(false);
 
 const iti = ref({});
-const urlRegister = "https://loyalty-linxapi.vercel.app/api/user/register";
+
+const urlValidateRegister =
+  "http://localhost:5000/api/user/validate/registration";
 
 // ----------------------- START OF COOKIE FUNCTION -----------------------
 
@@ -83,94 +86,64 @@ onMounted(() => {
 });
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-//Handle register method
-const handleRegister = async (e) => {
-  // e.preventDefault();
-  console.log("bineub");
 
-  if (password.value !== confirmPassword.value) {
-    error.value = "Passwords do not match";
-    // return;
-  } else if (!passwordRegex.test(password.value)) {
-    error.value =
-      "Password must be at least 6 characters, contain at least one special character, and at least one number";
-    // return;
-  } else {
-    error.value = null;
-    // console.log("GO");
-    try {
-      // Fetch method
-      const response = await fetch(urlRegister, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email.value,
-          password: password.value,
-          firstName: firstName.value,
-          middleName: middleName.value,
-          lastName: lastName.value,
-          mobileNo: mobileNo.value,
-        }),
-      });
 
-      // Handle data store response from API request SIGNIN
-      const data = await response.json();
-      if (response.ok) {
-        Swal.fire({
-          title: "Registration complete!",
-          text: "Please signin your account!",
-          icon: "success",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            saveUserData(mobileNo.value, "u_NO");
-            router.push("/signin");
-          }
-        });
-        console.log(data);
-      } else {
-        Swal.fire({
-          title: "Registration failed!",
-          text: data.message,
-          icon: "error",
-        }).then((result) => {
-          if (result.isConfirmed) {
-          }
-        });
-        error.value = data.message;
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        error.value = `Error ${error.response.status}: ${error.response.statusText}`;
-      } else if (error.request) {
-        // The request was made but no response was received
-        error.value = "No response received from the server";
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        error.value = "Error setting up the request";
-      }
+async function saveUserDataPrimary(data, name) {
+  try {
+    sessionStorage.setItem(name, JSON.stringify(data));
+    // console.log(sessionStorage.getItem(name));
+  } catch (error) {
+    console.log("Error saving data to session storage:", error);
+  }
+}
+
+//Handle validate infos
+const validateInfos = async () => {
+  try {
+    const response = await fetch(urlValidateRegister, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mobileNo: mobileNo.value,
+        email: email.value,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      saveUserDataPrimary(mobileNo.value, "mobileNo");
+      saveUserDataPrimary(email.value, "email");
+      saveUserDataPrimary(firstName.value, "firstName");
+      saveUserDataPrimary(lastName.value, "lastName");
+      saveUserDataPrimary(middleName.value, "middleName");
+      router.push({ name: "passcode" });
+    } else {
+      error.value = data.message;
+      console.log(data);
     }
+  } catch (error) {
+    console.log(error);
   }
 };
+
 //Validaation of mobile number
 const validateMobileNo = () => {
+  const mobileNumber = mobileNo.value.replace(/\s+/g, ""); // remove all spaces
+  mobileNo.value = mobileNumber;
   if (iti.value.isValidNumber()) {
-    handleRegister();
+    // handleRegister();
+    validateInfos();
   }
 };
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-gray-50 flex flex-col justify-center py-5 sm:px-6 lg:px-8"
-  >
+  <div class="min-h-screen bg-white flex flex-col py-5 sm:px-6 lg:px-8">
     <div class="mt-8 sm:mx-auto sm:w-1/2 sm:max-w-md sm:mb-2 w-[90%] mx-auto">
-      <div class="bg-white rounded-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div
+        class="bg-white border-none shadow-0 rounded-sm py-8 px-4 sm:rounded-lg sm:px-10"
+      >
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
           <div class="flex justify-center">
             <img
@@ -179,7 +152,7 @@ const validateMobileNo = () => {
               alt="Workflow"
             />
             <span
-              class="self-center text-[2rem] font-bold whitespace-nowrap dark:text-white"
+              class="self-center text-amber-700 text-[2rem] font-bold whitespace-nowrap dark:text-white"
               >Loyalty Linx</span
             >
           </div>
@@ -367,7 +340,7 @@ const validateMobileNo = () => {
               </div>
             </div>
           </div>
-          <div class="mt-6">
+          <!-- <div class="mt-6">
             <label
               for="password"
               class="block text-sm font-medium leading-5 text-gray-700"
@@ -412,9 +385,9 @@ const validateMobileNo = () => {
                 />
               </svg>
             </div>
-          </div>
+          </div> -->
 
-          <div class="mt-6">
+          <!-- <div class="mt-6">
             <label
               for="password_confirmation"
               class="block text-sm font-medium leading-5 text-gray-700"
@@ -459,25 +432,25 @@ const validateMobileNo = () => {
                 />
               </svg>
             </div>
-            <div class="mt-2">
-              <p
-                v-if="error"
-                style="font-size: 0.7rem; color: red"
-                class="shadow-none"
-              >
-                {{ error }}
-              </p>
-              <p v-else style="font-size: 0.7rem; color: red"></p>
-            </div>
+      
+          </div> -->
+          <div class="mt-2">
+            <p
+              v-if="error"
+              style="font-size: 0.7rem; color: red"
+              class="shadow-none"
+            >
+              {{ error }}
+            </p>
+            <p v-else style="font-size: 0.7rem; color: red"></p>
           </div>
-
           <div class="mt-6">
             <span class="block w-full rounded-md shadow-sm">
               <button
                 type="submit"
                 class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
               >
-                Register
+                SUBMIT
               </button>
             </span>
           </div>

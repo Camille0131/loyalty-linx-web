@@ -9,17 +9,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^4.21.0",
     "@vueuse/core": "^10.11.1",
     "apexcharts": "^3.53.0",
     "axios": "^1.7.5",
     "crypto-js": "^4.2.0",
     "flowbite": "^2.5.1",
+    "html2canvas": "^1.4.1",
     "intl-tel-input": "^23.8.1",
+    "js-cookie": "^3.0.5",
     "jsvectormap": "^1.6.0",
     "pinia": "^2.2.1",
     "pinia-plugin-persist": "^1.0.0",
     "sweetalert2": "^11.6.13",
     "vue": "^3.4.31",
+    "vue-qrcode": "^2.2.2",
     "vue-router": "4",
     "vue-tel-input": "^9.1.4",
     "vue3-apexcharts": "^1.6.0"

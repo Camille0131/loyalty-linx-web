@@ -90,9 +90,8 @@ const passwordRegex =
 //Handle register method
 const handleRegister = async (e) => {
   // e.preventDefault();
-  console.log("bineub");
 
-  if (password.value !== confirmPassword.value) {
+  if (password.value !== confirmPassword.value) { 
     error.value = "Passwords do not match";
     // return;
   } else if (!passwordRegex.test(password.value)) {

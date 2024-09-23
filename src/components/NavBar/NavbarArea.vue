@@ -71,9 +71,9 @@ function deleteAllCookies() {
 <template>
   <nav class="mt-5 border-gray-200 dark:bg-gray-900">
     <div
-      class="max-w-screen-xl shadow-md bg-white rounded-3xl flex flex-wrap items-center justify-between mx-auto p-4"
+      class="max-w-screen-xl bg-white rounded-3xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <a class="flex items-center space-x-3 rtl:space-x-reverse">
         <img
           src="../../assets/img//authimages/loyaltilinx-web-favicon.png"
           class="h-8"

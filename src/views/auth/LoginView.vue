@@ -1,24 +1,29 @@
 <script setup>
-import { callWithErrorHandling, ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import authStore from "../../stores/auth";
 import otp from "../../components/authentications/OTP.vue";
 import { useUserStore } from "../../stores/user";
+import "intl-tel-input/build/css/intlTelInput.css";
+import intlTelInput from "intl-tel-input";
 
-const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
+// const urlLogin = "http://localhost:5000/api/user/login";
+const urlLogin = "http://localhost:5000/api/user/login/mobileNo";
+const urlProfile = "http://localhost:5000/api/user/profile";
 
 const email = ref("");
+const mobileNo = ref("");
 const password = ref("");
 const error = ref(null);
 const router = useRouter();
 const token = ref(null);
 const generetedOtp = ref("");
-
+const iti = ref({});
 const userStore = useUserStore();
 
 let passwordVisible = ref(false);
 const handlePasswordVisible = () => (passwordVisible.value ^= true);
+
 async function setCookieAsync(name, value, days) {
   return new Promise((resolve, reject) => {
     // Set the expiration date for the cookie
@@ -64,7 +69,7 @@ async function saveUserData(data, name) {
 // test
 // Start of Signin function
 const handleSubmit = async (e) => {
-  e.preventDefault();
+  // e.preventDefault();
 
   try {
     // Fetch method
@@ -74,8 +79,8 @@ const handleSubmit = async (e) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email.value,
-        password: password.value,
+        mobileNo: mobileNo.value,
+        // password: password.value,
         role: "user",
       }),
     });
@@ -84,19 +89,23 @@ const handleSubmit = async (e) => {
     const data = await response.json();
     if (response.ok) {
       generetedOtp.value = generatedToken();
+      // sessionStorage.setItem("mobileNo", mobileNo.value);
+      saveUserData(data.userId, "u_ID");
+      saveUserData(mobileNo.value, "u_NO");
+      router.push({
+        path: "/verification",
+        query: { gen: generetedOtp.value },
+      });
       //save data in cookies
-      saveUserData(data.token, "u_TOK");
-      // console.log(data.token);
-      if (data.isFirstTimeLogin) {
-        router.push({
-          path: "/verification",
-          query: { gen: generetedOtp.value },
-        });
-      } else {
-        await getUserProfile(data.token);
-        userStore.setToken(data.token);
-      }
 
+      // console.log(data.token);
+      // if (data.isFirstTimeLogin) {
+
+      // } else {
+      //   await getUserProfile(data.token);
+      //   userStore.setToken(data.token);
+      // }
+      // console.log(data);
       // Get user profile data
       // getUserProfile(data.token);
 
@@ -162,19 +171,40 @@ const generatedToken = () => {
 
   return token;
 };
+
+// Validation mobile number
+const validateMobileNo = () => {
+  const mobileNumber = mobileNo.value.replace(/\s+/g, ""); // remove all spaces
+  mobileNo.value = mobileNumber;
+  if (iti.value.isValidNumber()) {
+    handleSubmit();
+  }
+};
+
+onMounted(() => {
+  const input = document.querySelector("#mobieNo");
+  iti.value = intlTelInput(input, {
+    utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
+    containerClass: "w-full",
+    initialCountry: "PH",
+    strictMode: true,
+  });
+});
 </script>
 
 <template>
   <div class="font-[sans-serif]">
     <div
-      class="min-h-screen flex fle-col items-center justify-center py-6 px-4"
+      class="min-h-screen py-6 px-1 sm:flex sm:justify-center sm:item-center"
     >
-      <div class="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full">
+      <div
+        class="grid mt-26 sm:mt-0 md:grid-cols-2 items-center gap-4 max-w-6xl w-full"
+      >
         <div
-          class="border mx-auto border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] sm:w-full"
+          class="border mx-auto w-full border-none shadow-none px-10 border-gray-300 rounded-lg p-6 max-w-sm shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] sm:w-full sm:border sm:shadow-2"
         >
-          <form class="space-y-4" @submit.prevent="handleSubmit">
-            <div class="flex justify-center">
+          <form class="space-y-4" @submit.prevent="validateMobileNo">
+            <div class="flex justify-center mb-10">
               <img
                 class="m-1 h-12 w-auto"
                 src="/src/assets/img/authimages/loyaltilinx-web-favicon.png"
@@ -182,7 +212,7 @@ const generatedToken = () => {
               />
               <span
                 style="font-family: poppins"
-                class="text-gray-800 self-center text-3xl font-extrabold whitespace-nowrap dark:text-white"
+                class="text-amber-700 self-center text-3xl font-extrabold whitespace-nowrap dark:text-white"
                 >Loyalty Linx</span
               >
             </div>
@@ -191,12 +221,47 @@ const generatedToken = () => {
             </div> -->
 
             <div>
-              <label class="text-gray-800 text-sm mb-2 block">Email</label>
+              <div>
+                <label
+                  for="mobieNo"
+                  class="mt-6 block text-sm font-medium leading-5 text-gray-700"
+                  >Mobile No</label
+                >
+                <div
+                  id="mobileNoCon"
+                  class="mt-1 relative rounded-md shadow-sm"
+                >
+                  <input
+                    v-model="mobileNo"
+                    id="mobieNo"
+                    name="mobieNo"
+                    placeholder=""
+                    type="tel"
+                    required="true"
+                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-sm placeholder-gray-400 focus:outline-none focus:shadow-outline-amber focus:border-amber-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                  />
+                  <div
+                    class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
+                  >
+                    <svg
+                      class="h-5 w-5 text-red-500"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <!-- <label class="text-gray-800 text-sm mb-2 block">Email</label>
               <div class="relative flex items-center">
                 <input
-                  v-model="email"
-                  name="email"
-                  type="email"
+                  v-model="mobileNo"
+                  name="mobileNo"
                   required
                   class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-amber-500"
                   placeholder="Email"
@@ -214,9 +279,9 @@ const generatedToken = () => {
                     data-original="#000000"
                   ></path>
                 </svg>
-              </div>
+              </div> -->
             </div>
-            <div>
+            <!-- <div>
               <label class="text-gray-800 text-sm mb-2 block">Password</label>
               <div class="relative flex items-center">
                 <input
@@ -256,13 +321,13 @@ const generatedToken = () => {
                   />
                 </svg>
               </div>
-            </div>
+            </div> -->
             <p style="font-size: 0.7rem; color: red" v-if="error">
               {{ error }}
             </p>
 
             <div class="flex flex-wrap items-center justify-between gap-4">
-              <div class="flex items-center">
+              <!-- <div class="flex items-center">
                 <input
                   id="remember-me"
                   name="remember-me"
@@ -275,17 +340,19 @@ const generatedToken = () => {
                 >
                   Remember me
                 </label>
-              </div>
+              </div> -->
 
-              <div class="text-sm">
-                <p
-                  @click="generateOtpTokens"
-                  href="jajvascript:void(0);"
-                  class="text-amber-500 hover:underline font-semibold cursor-pointer"
-                >
-                  Forgot your password?
-                </p>
-              </div>
+              <!-- <div class="text-sm">
+                <router-link to="/forgotpassword">
+                  <p
+                    @click="generateOtpTokens"
+                    href="jajvascript:void(0);"
+                    class="text-amber-500 hover:underline font-semibold cursor-pointer"
+                  >
+                    Forgot your password?
+                  </p>
+                </router-link>
+              </div> -->
             </div>
 
             <div class="!mt-8">
@@ -294,27 +361,38 @@ const generatedToken = () => {
                 type="submit"
                 class="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-amber-500 hover:bg-amber-600 focus:outline-none"
               >
-                Log in
+                Submit
               </button>
               <!-- </router-link> -->
             </div>
-            <div
+            <!-- <div
               class="flex w-full items-center gap-2 py-6 text-sm text-slate-600"
             >
               <div class="h-px w-full bg-slate-200"></div>
               OR
               <div class="h-px w-full bg-slate-200"></div>
-            </div>
+            </div> -->
 
             <div class="mt-7 flex flex-col gap-2">
-              <a
+              <div>
+                <!-- <router-link to="/home"> -->
+                <!-- <button
+                  type="submit"
+                  class="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-amber-600 hover:bg-amber-700 focus:outline-none"
+                >
+                  Log in via OTP
+                </button> -->
+                <!-- </router-link> -->
+              </div>
+              <!-- <a
                 class="cursor-pointer hover:bg-gray-100 inline-flex h-10 w-full items-center justify-center rounded-lg gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <!-- <img
+                <img
                   src="https://www.svgrepo.com/show/512317/github-142.svg"
                   alt="GitHub"
                   class="h-[18px] w-[18px]"
-                /> -->
+                  
+                />
                 <div class="w-[1.4rem]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -344,9 +422,9 @@ const generatedToken = () => {
                   </svg>
                 </div>
                 Continue with Facebook
-              </a>
+              </a> -->
 
-              <a
+              <!-- <a
                 class="inline-flex cursor-pointer hover:bg-gray-100 h-10 w-full items-center justify-center rounded-lg gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <img
@@ -354,7 +432,7 @@ const generatedToken = () => {
                   alt="Google"
                   class="h-[18px] w-[18px]"
                 />Continue with Google
-              </a>
+              </a> -->
             </div>
             <p class="text-sm !mt-8 text-center text-gray-800">
               Don't have an account
@@ -366,7 +444,7 @@ const generatedToken = () => {
             </p>
           </form>
         </div>
-        <div class="lg:h-[400px] md:h-[300px] max-md:mt-8">
+        <div id="image" class="lg:h-[400px] md:h-[300px] max-md:mt-8">
           <img
             src="../../assets/img/authimages/login-image.jpg"
             class="w-full h-full max-md:w-4/5 mx-auto block object-cover"
@@ -376,3 +454,28 @@ const generatedToken = () => {
     </div>
   </div>
 </template>
+
+<style>
+input:focus {
+  border: none;
+  box-shadow: none;
+}
+
+#mobieNo:focus {
+  border: 1px #ffb300 solid;
+  box-shadow: none;
+}
+
+.iti {
+  --iti-path-flags-1x: url("/node_modules/intl-tel-input/build/img/flags.webp");
+  --iti-path-flags-2x: url("/node_modules/intl-tel-input/build/img/flags@2x.webp");
+  --iti-path-globe-1x: url("/node_modules/intl-tel-input/build/img/globe.webp");
+  --iti-path-globe-2x: url("/node_modules/intl-tel-input/build/img/globe@2x.webp");
+}
+
+@media (max-width: 768px) {
+  #image {
+    display: none;
+  }
+}
+</style>

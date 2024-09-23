@@ -32,6 +32,7 @@ function deleteAllCookies() {
 
 async function signOut() {
   localStorage.clear();
+  sessionStorage.clear();
   deleteAllCookies();
   useAuthStore.logout();
   router.push("/signin");

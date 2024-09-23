@@ -1,7 +1,7 @@
 <script setup>
 import Swal from "sweetalert2";
-import otp from "../../components/authentications/OTP.vue";
-import { ref, watch } from "vue";
+import OTP from "../../components/authentications/OTP.vue";
+import { ref, watch, onMounted } from "vue";
 import authStore from "../../stores/auth";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
@@ -10,18 +10,20 @@ const route = useRouter();
 const tokenCookie = ref(null);
 const otpValue = ref("");
 const resendOtpTimer = ref(300); // 5 minutes timer
-const mobileNo = ref("");
+const userId = ref("");
 let resendOtpInterval = null;
+const mobileNo = ref("");
 
-const urlSendOtp = "https://loyalty-linxapi.vercel.app/api/user/send-otp";
-const urlVerification =
-  "https://loyalty-linxapi.vercel.app/api/user/validate-code-login";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
-const urlRefreshCode =
-  "https://loyalty-linxapi.vercel.app/api/user/refresh-code";
+const urlSendOtp = "http://localhost:5000/api/user/send-otp";
+const urlVerification = "http://localhost:5000/api/user/validate-login";
+const urlProfile = "http://localhost:5000/api/user/profile";
+const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
 
+// onMounted(() => {
 getCookieTokenAsync("u_TOK");
 getCookieMobileAsync("u_NO");
+getCookieUserIdAsync("u_ID");
+// });
 
 // ------------------------- START OF COOKIE FUNCTIONS -------------------------
 
@@ -43,20 +45,20 @@ async function getCookieAsync(name) {
 
 //  Get mobile from cookies
 
-async function getCookieMobile(name) {
-  return new Promise((resolve, reject) => {
-    const nameEQ = name + "=";
-    const cookiesArray = document.cookie.split(";");
-    for (let i = 0; i < cookiesArray.length; i++) {
-      let cookie = cookiesArray[i].trim();
-      if (cookie.indexOf(nameEQ) === 0) {
-        resolve(cookie.substring(nameEQ.length, cookie.length));
-        return;
-      }
-    }
-    resolve(null); // Return null if the cookie is not found
-  });
-}
+// async function getCookieMobile(name) {
+//   return new Promise((resolve, reject) => {
+//     const nameEQ = name + "=";
+//     const cookiesArray = document.cookie.split(";");
+//     for (let i = 0; i < cookiesArray.length; i++) {
+//       let cookie = cookiesArray[i].trim();
+//       if (cookie.indexOf(nameEQ) === 0) {
+//         resolve(cookie.substring(nameEQ.length, cookie.length));
+//         return;
+//       }
+//     }
+//     resolve(null); // Return null if the cookie is not found
+//   });
+// }
 
 // SaveCookie setter
 async function setCookieAsync(name, value, days) {
@@ -87,16 +89,47 @@ async function setCookieAsync(name, value, days) {
 
 //Get Token from cookies Function
 async function getCookieTokenAsync(name) {
-  const cookieValue = await getCookieAsync(name);
-  if (cookieValue) {
-    tokenCookie.value = JSON.parse(decodeURIComponent(cookieValue));
+  try {
+    const cookieValue = await getCookieAsync(name);
+    if (cookieValue) {
+      tokenCookie.value = JSON.parse(decodeURIComponent(cookieValue));
+      console.log("Token cookie value:");
+    } else {
+      console.log("Token cookie not found");
+    }
+  } catch (error) {
+    console.error("Error getting token cookie:", error);
   }
 }
 //Get mobileNo from cookies Function
 async function getCookieMobileAsync(name) {
-  const cookieValue = await getCookieMobile(name);
-  if (cookieValue) {
-    mobileNo.value = JSON.parse(decodeURIComponent(cookieValue));
+  try {
+    const cookieValue = await getCookieAsync(name);
+    if (cookieValue) {
+      // const mobileNos = JSON.parse(decodeURIComponent(cookieValue));
+      mobileNo.value = JSON.parse(decodeURIComponent(cookieValue));
+      // console.log(mobileNos);
+      console.log(" Mobile value:");
+      console.log(mobileNo.value);
+    } else {
+      console.log("Mobile not found");
+    }
+  } catch (error) {
+    console.error("Error getting token cookie:", error);
+  }
+}
+//Get userId from cookies Function
+async function getCookieUserIdAsync(name) {
+  try {
+    const cookieValue = await getCookieAsync(name);
+    if (cookieValue) {
+      userId.value = JSON.parse(decodeURIComponent(cookieValue));
+      console.log("UseId value:");
+    } else {
+      console.log("Mobile not found");
+    }
+  } catch (error) {
+    console.error("Error getting token cookie:", error);
   }
 }
 // Handle save user data after authentication success
@@ -108,7 +141,7 @@ async function saveUserData(data, name) {
     const success = await setCookieAsync(name, userDataString, 7);
 
     if (success) {
-      // console.log("Cookie saved successfully");
+      console.log("Cookie saved successfully");
     }
   } catch (error) {
     console.error("Error saving cookie:", error);
@@ -215,7 +248,7 @@ const getUserProfile = async (token) => {
 
       // Handle data store response from API request SIGNIN
       const data = await response.json();
-      saveUserData(data.userProfile, "u_PRO");
+      // saveUserData(data.userProfile, "u_PRO");
       saveUserData(token, "u_TOK");
       authStores.login();
       route.push("/home");
@@ -235,16 +268,21 @@ const verify = async (e) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenCookie.value}`,
       },
       body: JSON.stringify({
         secretCode: otpValue.value,
+        userId: userId.value,
       }),
     });
+    console.log(otpValue.value);
     const data = await response.json();
     if (response.ok) {
       console.log("Go in home");
-      getUserProfile(tokenCookie.value);
+      saveUserData(data.token, "u_TOK");
+
+      route.push({ name: "link/passcode" });
+      // console.log(data);
+      // getUserProfile(tokenCookie.value);
     } else {
       Swal.fire({
         title: "Authentication failed",
@@ -263,6 +301,7 @@ const verify = async (e) => {
     console.log(error.message);
   }
 };
+
 // ------------------------- END OF AUTH FUNCTIONS -------------------------
 
 const test = () => {
@@ -279,22 +318,22 @@ startResendOtpTimer();
 </script>
 
 <template>
-  <div class="sm:mx-auto sm:w-full sm:max-w-md my-20">
-    <img
+  <div class="sm:mx-auto sm:w-full sm:max-w-md my-40">
+    <!-- <img
       class="mx-auto h-20 w-auto"
       src="/src/assets/img/authimages/loyaltilinx-web-favicon.png"
       alt="Workflow"
-    />
+    /> -->
     <h2
       class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900"
     >
-      Verification Code
+      Enter the OTP
     </h2>
-    <p class="text-center">Please enter the OTP sent to your mobile number</p>
+    <p class="text-center">sent to {{ mobileNo }}</p>
   </div>
   <form action="">
     <div class="flex flex-col justify-center">
-      <otp :digit-count="6" @update:otp="otpValue = $event"></otp>
+      <OTP :digit-count="6" @update:otp="otpValue = $event"></OTP>
       <!-- <p>{{ otpValue }}</p> -->
       <div class="!mt-8 flex justify-center">
         <button

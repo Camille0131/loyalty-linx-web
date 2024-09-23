@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from "vue";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 const props = defineProps(["item"]);
 
 const handleVerification = () => {
-  console.log(props.item);
+  router.replace({ name: "choose/id" });
 };
 
 const profileMenu = ref([
@@ -150,7 +151,7 @@ const profileMenu = ref([
         >
           <div class="relative drop-shadow-2">
             <img
-              class="rounded-full"
+              class="rounded-full h-28"
               :src="item.profilePicture"
               alt="profile"
             />

@@ -2,10 +2,9 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import authStore from "../../stores/auth";
-import otp from "../../components/authentications/OTP.vue";
 import { useUserStore } from "../../stores/user";
-import "intl-tel-input/build/css/intlTelInput.css";
-import intlTelInput from "intl-tel-input";
+// import "intl-tel-input/build/css/intlTelInput.css";
+// import intlTelInput from "intl-tel-input";
 
 // const urlLogin = "http://localhost:5000/api/user/login";
 const urlLogin = "http://localhost:5000/api/user/login/mobileNo";
@@ -16,10 +15,20 @@ const mobileNo = ref("");
 const password = ref("");
 const error = ref(null);
 const router = useRouter();
-const token = ref(null);
 const generetedOtp = ref("");
-const iti = ref({});
+// const iti = ref({});
 const userStore = useUserStore();
+
+const mobieNoInput = ref(null);
+
+onMounted(() => {
+  // intlTelInput(mobieNoInput.value, {
+  //   utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
+  //   containerClass: "w-full",
+  //   initialCountry: "PH",
+  //   strictMode: true,
+  // });
+});
 
 let passwordVisible = ref(false);
 const handlePasswordVisible = () => (passwordVisible.value ^= true);
@@ -80,7 +89,6 @@ const handleSubmit = async (e) => {
       },
       body: JSON.stringify({
         mobileNo: mobileNo.value,
-        // password: password.value,
         role: "user",
       }),
     });
@@ -176,20 +184,8 @@ const generatedToken = () => {
 const validateMobileNo = () => {
   const mobileNumber = mobileNo.value.replace(/\s+/g, ""); // remove all spaces
   mobileNo.value = mobileNumber;
-  if (iti.value.isValidNumber()) {
-    handleSubmit();
-  }
+  handleSubmit();
 };
-
-onMounted(() => {
-  const input = document.querySelector("#mobieNo");
-  iti.value = intlTelInput(input, {
-    utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
-    containerClass: "w-full",
-    initialCountry: "PH",
-    strictMode: true,
-  });
-});
 </script>
 
 <template>
@@ -201,7 +197,7 @@ onMounted(() => {
         class="grid mt-26 sm:mt-0 md:grid-cols-2 items-center gap-4 max-w-6xl w-full"
       >
         <div
-          class="border mx-auto w-full border-none shadow-none px-10 border-gray-300 rounded-lg p-6 max-w-sm shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] sm:w-full sm:border sm:shadow-2"
+          class="border mx-auto w-full border-none shadow-none px-10 border-gray-300 rounded-lg p-6 max-w-sm sm:w-full sm:border sm:shadow-2"
         >
           <form class="space-y-4" @submit.prevent="validateMobileNo">
             <div class="flex justify-center mb-10">
@@ -231,17 +227,26 @@ onMounted(() => {
                   id="mobileNoCon"
                   class="mt-1 relative rounded-md shadow-sm"
                 >
-                  <input
+                  <!-- <input
                     v-model="mobileNo"
                     id="mobieNo"
+                    ref="mobieNoInput"
                     name="mobieNo"
                     placeholder=""
                     type="tel"
                     required="true"
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-sm placeholder-gray-400 focus:outline-none focus:shadow-outline-amber focus:border-amber-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                  />
+                  /> -->
+                  <vue-tel-input
+                    :inputOptions="{
+                      maxlength: 11,
+                    }"
+                    required
+                    v-model="mobileNo"
+                    class="border border-gray-300 p-1 focus:border-amber-500 focus:ring-amber-500"
+                  ></vue-tel-input>
                   <div
-                    class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
+                    class="hidden absolute inset-y-0 right-0 pr-3 items-center pointer-events-none"
                   >
                     <svg
                       class="h-5 w-5 text-red-500"
@@ -466,12 +471,16 @@ input:focus {
   box-shadow: none;
 }
 
-.iti {
-  --iti-path-flags-1x: url("/node_modules/intl-tel-input/build/img/flags.webp");
-  --iti-path-flags-2x: url("/node_modules/intl-tel-input/build/img/flags@2x.webp");
-  --iti-path-globe-1x: url("/node_modules/intl-tel-input/build/img/globe.webp");
-  --iti-path-globe-2x: url("/node_modules/intl-tel-input/build/img/globe@2x.webp");
-}
+/* .iti { */
+/* --iti-path-flags-1x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/dist/img/flags.webp");
+  --iti-path-flags-2x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/dist/img/flags@2x.webp"); */
+/* --iti-path-flags-1x: url("/public/img/flags.webp");
+  --iti-path-flags-2x: url("/public/img/flags@2x.webp"); */
+/* --iti-path-flags-1x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/dist/img/globe.webp");
+  --iti-path-flags-2x: url("https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/dist/img/globe@2x.webp"); */
+/* --iti-path-globe-1x: url("/public/img/globe.webp");
+  --iti-path-globe-2x: url("/public/img/globe@2x.webp"); */
+/* } */
 
 @media (max-width: 768px) {
   #image {
@@ -479,3 +488,6 @@ input:focus {
   }
 }
 </style>
+
+<!-- /* --iti-path-flags-1x: url("/node_modules/intl-tel-input/build/img/flags.webp"); */ -->
+<!-- /* --iti-path-flags-2x: url("/node_modules/intl-tel-input/build/img/flags@2x.webp"); */ -->

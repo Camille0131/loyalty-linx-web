@@ -95,7 +95,7 @@ const routes = [
   {
     path: "/application/credit",
     name: "apply/credit",
-    component: () => import("../components/ApplyCredit/ApplicationForm.vue"),
+    component: () => import("../components/Credits/ApplicationForm.vue"),
     meta: {
       title: "Apply",
       requiresAuth: true,
@@ -118,6 +118,11 @@ const routes = [
     component: () => import("../components/ForgotPassword/ChangePassword.vue"),
   },
   {
+    path: "/confirm/password",
+    name: "confirm/password",
+    component: () => import("../components/ForgotPassword/ConfirmPassword.vue"),
+  },
+  {
     path: "/passcode",
     name: "passcode",
     component: () => import("../components/registration/RegisterPassword.vue"),
@@ -136,7 +141,7 @@ const routes = [
   {
     path: "/loan/status",
     name: "loan/status",
-    component: () => import("../components/ApplyCredit/LoanStatusLanding.vue"),
+    component: () => import("../components/Credits/LoanStatusLanding.vue"),
     meta: {
       title: "Credit status",
       requiresAuth: true,
@@ -154,7 +159,7 @@ const routes = [
   {
     path: "/loan/monitor",
     name: "loan/monitor",
-    component: () => import("../components/ApplyCredit/LoanStatus.vue"),
+    component: () => import("../components/Credits/LoanStatus.vue"),
     meta: {
       title: "Credit monitor",
       requiresAuth: true,
@@ -218,6 +223,33 @@ const routes = [
     path: "/fill/confirmation",
     name: "fill/confirmation",
     component: () => import("../components/Verification/Confirmation.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/selection/payment",
+    name: "selection/payment",
+    component: () => import("../components/Payment/ChooseLoanPayment.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/payment/method",
+    name: "payment/method",
+    component: () => import("../components/Payment/ChoosePaymentMethod.vue"),
+    meta: {
+      title: "",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/shop/product/list",
+    name: "product/list",
+    component: () => import("../components/Shop/ProductList.vue"),
     meta: {
       title: "",
       requiresAuth: true,

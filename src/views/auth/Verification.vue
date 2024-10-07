@@ -18,7 +18,6 @@ const urlSendOtp = "http://localhost:5000/api/user/send-otp";
 const urlVerification = "http://localhost:5000/api/user/validate-login";
 const urlProfile = "http://localhost:5000/api/user/profile";
 const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
-
 // onMounted(() => {
 getCookieTokenAsync("u_TOK");
 getCookieMobileAsync("u_NO");
@@ -186,16 +185,10 @@ const refreshCode = async (e) => {
       },
     });
     const data = await response.json();
-    // console.log(data);
-    // console.log(response);
+
     if (response.ok) {
-      // console.log(response);
-      // console.log(data);
       sendOtp();
     } else {
-      // sendOtp();
-      // console.log(response);
-      // console.log(data);
     }
   } catch (error) {
     console.log(error.message);
@@ -233,27 +226,47 @@ const sendOtp = async (e) => {
 // ------------------------- START OF AUTH FUNCTIONS -------------------------
 
 // Start of Get User Profile API request
-const getUserProfile = async (token) => {
+// const getUserProfile = async (token) => {
+//   try {
+//     const response = await fetch(urlProfile, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${tokenCookie.value}`,
+//       },
+//     });
+
+//     if (response.ok) {
+//       const authStores = authStore();
+
+//       // Handle data store response from API request SIGNIN
+//       const data = await response.json();
+//       // saveUserData(data.userProfile, "u_PRO");
+//       saveUserData(token, "u_TOK");
+//       authStores.login();
+//       route.push("/home");
+//     } else {
+//       error.value = "Error fetching user profile";
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+const handleRefreshCode = async (idUser) => {
   try {
-    const response = await fetch(urlProfile, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenCookie.value}`,
-      },
+    const response = await fetch(urlRefreshCode, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: idUser }),
     });
 
+    const data = await response.json();
+    // console.log(data.message);
     if (response.ok) {
-      const authStores = authStore();
-
-      // Handle data store response from API request SIGNIN
-      const data = await response.json();
-      // saveUserData(data.userProfile, "u_PRO");
-      saveUserData(token, "u_TOK");
-      authStores.login();
-      route.push("/home");
+      // console.log(data.message);
     } else {
-      error.value = "Error fetching user profile";
+      // console.log(data.message);
     }
   } catch (error) {
     console.log(error);
@@ -278,8 +291,8 @@ const verify = async (e) => {
     const data = await response.json();
     if (response.ok) {
       console.log("Go in home");
+      handleRefreshCode(userId.value);
       saveUserData(data.token, "u_TOK");
-
       route.push({ name: "link/passcode" });
       // console.log(data);
       // getUserProfile(tokenCookie.value);

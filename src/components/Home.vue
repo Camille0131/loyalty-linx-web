@@ -15,14 +15,18 @@ import MorePath from "../assets/img/home/more-horizontal-svgrepo-com.svg";
 import HistoryTable from "./HomeCard/HistoryTable.vue";
 import Card from "./HomeCard/Card.vue";
 import TransactionHistoryModal from "./modal/TransactionHistoryModal.vue";
-import MerchantsSelection from "./ApplyCredit/MerchantsSelection.vue";
+import MerchantsSelection from "./Credits/MerchantsSelection.vue";
 import { useUserStore } from "../stores/user";
+import { useRouter } from "vue-router";
 
 const creditAmount = JSON.parse(sessionStorage.getItem("u_CRDBAl"));
-
+const router = useRouter();
 let merchantData = ref([]);
 const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
+const userData = JSON.parse(localStorage.getItem("u_data"));
 
+const creditsHistory = ref([]);
+creditsHistory.value = userData.transactionHistory;
 const formattedCreditAmount = computed(() => {
   return new Intl.NumberFormat("en-PH", {
     style: "decimal",
@@ -134,7 +138,6 @@ const creditHistory = ref([
     action: "Keyboard (SM)",
   },
 ]);
-
 const pointsHistory = ref([
   {
     name: "Points",
@@ -227,6 +230,7 @@ const applyCredit = () => {
 
 const payCredits = () => {
   // Code for paying credits
+  router.push({ name: "selection/payment" });
   console.log("Paying credits...");
 };
 
@@ -263,6 +267,8 @@ const getAllMerchant = async (token) => {
     if (response.ok) {
       const data = await response.json();
       merchantData.value = data.merchants;
+      console.log(data.merchants[0]._id);
+      localStorage.setItem("m_data", JSON.stringify(data.merchants));
     } else {
       const data = await response.json();
       console.log(data);
@@ -344,7 +350,7 @@ onMounted(async () => {
                 :key="index"
                 :item="balanceItem"
                 :index="index"
-                :history="creditHistory"
+                :history="creditsHistory"
               />
 
               <div class="w-full flex flex-row">
@@ -368,10 +374,10 @@ onMounted(async () => {
                 :key="index"
                 :item="balancePoint"
                 :index="index"
-                :history="pointsHistory"
+                :history="creditsHistory"
               />
               <div class="w-full flex flex-row">
-                <HistoryTable id="table" :history="pointsHistory" />
+                <HistoryTable id="table" :history="creditsHistory" />
               </div>
             </div>
           </template>
@@ -387,11 +393,11 @@ onMounted(async () => {
             :key="index"
             :item="balanceItem"
             :index="index"
-            :history="creditHistory"
+            :history="creditsHistory"
           />
 
           <div class="w-full flex flex-row">
-            <HistoryTable id="table" :history="creditHistory" />
+            <HistoryTable id="table" :history="creditsHistory" />
           </div>
         </div>
       </template>
@@ -406,10 +412,10 @@ onMounted(async () => {
             :key="index"
             :item="balancePoint"
             :index="index"
-            :history="pointsHistory"
+            :history="creditHistory"
           />
           <div class="w-full flex flex-row">
-            <HistoryTable id="table" :history="pointsHistory" />
+            <HistoryTable id="table" :history="creditHistory" />
           </div>
         </div>
       </template>

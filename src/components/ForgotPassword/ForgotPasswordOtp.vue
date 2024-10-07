@@ -8,7 +8,29 @@ const router = useRouter();
 const mobileNo = JSON.parse(sessionStorage.getItem("mobileNo"));
 const userId = JSON.parse(sessionStorage.getItem("userId"));
 const error = ref(null);
+const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
+
 const validateCode = "http://localhost:5000/api/user/validate-code";
+
+const handleRefreshCode = async (idUser) => {
+  try {
+    const response = await fetch(urlRefreshCode, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: idUser }),
+    });
+
+    const data = await response.json();
+    // console.log(data.message);
+    if (response.ok) {
+      // console.log(data.message);
+    } else {
+      // console.log(data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 const verify = async () => {
   try {
     const response = await fetch(validateCode, {
@@ -18,7 +40,8 @@ const verify = async () => {
     });
     const data = await response.json();
     if (response.ok) {
-      router.push({ name: "resetpassword" });
+      handleRefreshCode(userId);
+      router.push({ name: "confirm/password" });
     } else {
       error.value = data.message;
     }

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import "intl-tel-input/build/css/intlTelInput.css";
-import intlTelInput from "intl-tel-input";
+// import "intl-tel-input/build/css/intlTelInput.css";
+// import intlTelInput from "intl-tel-input";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
 // import AddressAutoComplete from "../../components/address/AddressAutoComplete.vue";
@@ -78,12 +78,12 @@ const handleConfirmPasswordVisible = () =>
 //Handle mounted intl mobile phone number input
 onMounted(() => {
   const input = document.querySelector("#mobieNo");
-  iti.value = intlTelInput(input, {
-    utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
-    containerClass: "w-full",
-    initialCountry: "PH",
-    strictMode: true,
-  });
+  // iti.value = intlTelInput(input, {
+  //   utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
+  //   containerClass: "w-full",
+  //   initialCountry: "PH",
+  //   strictMode: true,
+  // });
 });
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
@@ -91,7 +91,7 @@ const passwordRegex =
 const handleRegister = async (e) => {
   // e.preventDefault();
 
-  if (password.value !== confirmPassword.value) { 
+  if (password.value !== confirmPassword.value) {
     error.value = "Passwords do not match";
     // return;
   } else if (!passwordRegex.test(password.value)) {
@@ -165,9 +165,9 @@ const handleRegister = async (e) => {
 };
 //Validaation of mobile number
 const validateMobileNo = () => {
-  if (iti.value.isValidNumber()) {
-    handleRegister();
-  }
+  // if (iti.value.isValidNumber()) {
+  handleRegister();
+  // }
 };
 
 //AutoCompleteAddress Function

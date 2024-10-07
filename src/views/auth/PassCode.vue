@@ -4,7 +4,6 @@ import otpPassocode from "../../components/registration/otpPassocode.vue";
 import { useRouter } from "vue-router";
 import authStore from "../../stores/auth";
 import { useUserStore } from "../../stores/user";
-import Cookies from "js-cookie";
 
 const otpValue = ref("");
 const router = useRouter();
@@ -12,6 +11,8 @@ const error = ref(null);
 const tokenCookie = ref(null);
 const userId = ref("");
 const userProfile = ref([]);
+
+// userProfile.value = JSON.parse(localStorage.getItem("u_data"));
 
 const loginPasscode = "http://localhost:5000/api/user/passcode";
 const urlProfile = "http://localhost:5000/api/user/profile";
@@ -198,13 +199,16 @@ const getUserProfile = async (token) => {
         ...userProfile,
         creditRequests: undefined,
         credits: undefined,
+        fullAddress: undefined,
+        verification: undefined,
       };
 
       const credReq = data.userProfile.creditRequests;
+
       const mappedCredReq = credReq.map((item) => {
         return { ...item, paymentLog: undefined };
       });
-      const cred = data.userProfile.credits;
+
       const mappedCred = credReq.map((item) => {
         return { ...item, paymentLog: undefined };
       });
@@ -217,11 +221,12 @@ const getUserProfile = async (token) => {
       saveUserData(mappedCred, "userCred");
       saveUserData(mappedCredReq, "u_CREDREQ");
       saveUserData(dataUser, "u_PRO");
-      handleRefreshCode(data.userProfile._id);
+      // handleRefreshCode(data.userProfile._id);
       sessionStorage.setItem(
         "u_CRDBAl",
         JSON.stringify(data.userProfile.balance.toString())
       );
+      localStorage.setItem("u_data", JSON.stringify(data.userProfile));
       localStorage.setItem("qrCode", JSON.stringify(data.userProfile.qrCode));
       userStore.setToken(token);
       authStores.login();

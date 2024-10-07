@@ -6,7 +6,11 @@ import Services from "./HomeCard/Services.vue";
 import ConvertPath from "../assets/img/points/bitcoin-convert-svgrepo-com.svg";
 import RedeemPath from "../assets/img/points/to-receive-points-svgrepo-com.svg";
 import ShopPath from "../assets/img/points/shop-2-svgrepo-com.svg";
+import { useRouter } from "vue-router";
+
 const props = defineProps(["item", "index"]);
+
+const router = useRouter();
 
 const balances = ref([
   {
@@ -36,6 +40,11 @@ const servicesItem = ref([
     path: ShopPath,
   },
 ]);
+
+const userData = JSON.parse(localStorage.getItem("u_data"));
+
+const creditsHistory = ref([]);
+creditsHistory.value = userData.transactionHistory;
 const brandDatas = ref([
   {
     name: "Purchase",
@@ -86,6 +95,35 @@ const brandDatas = ref([
     action: "Keyboard (SM)",
   },
 ]);
+
+const servicesFunctions = (service) => {
+  switch (service.id) {
+    case 1:
+      convert();
+      break;
+    case 2:
+      redeem();
+      break;
+    case 3:
+      shop();
+      break;
+
+    default:
+      console.error(`Unknown service ID: ${service.id}`);
+    // You could also perform some other default action here
+  }
+};
+
+const convert = () => {
+  console.log("Converting....");
+};
+const redeem = () => {
+  console.log("Converting....");
+};
+const shop = () => {
+  console.log("Go to shop.....");
+  router.push({ name: "product/list" });
+};
 </script>
 
 <template>
@@ -100,9 +138,12 @@ const brandDatas = ref([
         />
       </ul>
       <div id="services-container ">
-        <Services :services="servicesItem" />
+        <Services
+          :services="servicesItem"
+          @serviceClicked="servicesFunctions"
+        />
         <div class="pb-[6rem]">
-          <PointsHistory :brands="brandDatas" />
+          <PointsHistory :brands="creditsHistory" />
         </div>
       </div>
     </div>

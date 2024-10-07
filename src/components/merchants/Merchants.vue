@@ -1,6 +1,12 @@
 <script setup>
 import { ref } from "vue";
-import ModalMerchants from "../ApplyCredit/ApplicationForm.vue";
+import ModalMerchants from "../Credits/ApplicationForm.vue";
+import Swal from "sweetalert2";
+const limit = JSON.parse(sessionStorage.getItem("limit"));
+const balanceString = JSON.parse(sessionStorage.getItem("u_CRDBAl"));
+const balance = parseInt(balanceString); // convert balance to integer
+
+const newBalance = balance + 500;
 
 const props = defineProps(["item"]);
 let showModal = ref(false);
@@ -14,7 +20,19 @@ const hideModal = () => {
 };
 
 const unHideModal = () => {
-  showModal.value = true;
+  if (newBalance < limit) {
+    showModal.value = true;
+  } else {
+    Swal.fire({
+      title: "Request fail!",
+      text: "Limit exceed!",
+      icon: "error",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        showModal.value = false;
+      }
+    });
+  }
 };
 </script>
 <template>

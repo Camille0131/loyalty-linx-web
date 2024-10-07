@@ -28,7 +28,6 @@ async function handleLimit() {
   } else {
     console.log(newLimit);
   }
-  console.log(newLimit);
 }
 
 //  Get token from cookies
@@ -64,9 +63,10 @@ const creditAmount = ref("500");
 const hideModal = () => {
   sessionStorage.removeItem("merchantItem");
 };
+
 const merchantId = merchant?._id;
 const urlCreditRequest = `http://localhost:5000/api/user/${merchantId}/request-credit`;
-
+console.log(merchantId);
 // Computed property to format the credit amount with currency formatting
 
 // Computed property to format the credit amount with currency formatting
@@ -183,7 +183,6 @@ const handleCreditRequest = async () => {
             router.replace("/home");
           }
         });
-
       }
     }
   } catch (error) {
@@ -244,38 +243,7 @@ const handleCreditRequest = async () => {
             </h2>
           </div>
         </div>
-        <!-- <div class="col-span-2">
-          <label
-            for="income"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Income source</label
-          >
-          <select
-            id="income"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option selected>Select income source</option>
-            <option value="Employment">Employment</option>
-            <option value="Freelance">Freelance</option>
-            <option value="Remittance">Remittance</option>
-            <option value="Business">Business</option>
-          </select>
-        </div> -->
-        <!-- <div class="col-span-2 sm:col-span-1">
-          <label
-            for="price"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Montly income</label
-          >
-          <input
-            type="number"
-            name="price"
-            id="price"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            placeholder="0.00"
-            required=""
-          />
-        </div> -->
+
         <div class="col-span-2 mt-8">
           <h1 class="font-bold text-gray-800 text-2xl">Installment Details</h1>
         </div>
@@ -356,23 +324,6 @@ const handleCreditRequest = async () => {
             </div>
           </div>
         </div>
-        <!-- <div class="col-span-2">
-          <label
-            for="term"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Term</label
-          >
-          <select
-            id="term"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          >
-            <option selected="">Select term</option>
-            <option value="2">2 months</option>
-            <option value="3">3 months</option>
-            <option value="4">4 months</option>
-            <option value="5">5 months</option>
-          </select>
-        </div> -->
       </div>
       <div class="py-10 mx-8 rounded-md my-4 bg-white">
         <div>

@@ -12,7 +12,7 @@ import amazon from "../assets/img/merchants/amazon.png";
 import super8 from "../assets/img/merchants/super8.jpg";
 import sm from "../assets/img/merchants/sm.png";
 import walmart from "../assets/img/merchants/walmart.png";
-import MerchantsSelection from "./ApplyCredit/MerchantsSelection.vue";
+import MerchantsSelection from "./Credits/MerchantsSelection.vue";
 import { useUserStore } from "../stores/user";
 import Merchants from "./merchants/Merchants.vue";
 import { useRouter } from "vue-router";
@@ -21,33 +21,30 @@ const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
 const router = useRouter();
 let merchantData = ref([]);
 let isMerchantDataFetched = ref(false); // Flag to track whether merchant data has been fetched
-const userProfile = ref("");
+const userProfile = ref([]);
 const credits = ref("");
 const creditsReq = ref("");
 const limit = ref("");
 const newLimit = ref(0);
 const used = ref("");
+
+userProfile.value = JSON.parse(localStorage.getItem("u_data"));
 getCookieUserProfileAsync("u_PRO");
-getCookieUserCredsAsync("u_CRED");
+getCookieUserCredsAsync("userCred");
 getCookieUserCredReqsAsync("u_CREDREQ");
 
 onMounted(async () => {
   const userStore = useUserStore();
   const token = userStore.token;
-  // getAllMerchant(token);
-  if (!isMerchantDataFetched.value) {
-    await getAllMerchant(token);
-    isMerchantDataFetched.value = true;
-  }
-  used.value = userProfile.value.balance.toString();
-  sessionStorage.setItem(
-    "u_CRDBAl",
-    JSON.stringify(userProfile.value.balance.toString())
-  );
+  // if (!JSON.parse(localStorage.getItem("merchants"))) {
+  //   await getAllMerchant(token);
+  //   isMerchantDataFetched.value = true;
+  // }
+  used.value = userProfile.value.balance;
+  sessionStorage.setItem("u_CRDBAl", JSON.stringify(userProfile.value.balance));
   limit.value = userProfile.value.limit;
   newLimit.value = limit.value - used.value;
 
-  console.log(newLimit.value);
   sessionStorage.setItem("limit", JSON.stringify(userProfile.value.limit));
 });
 
@@ -110,27 +107,30 @@ async function getCookieUserCredReqsAsync(name) {
   }
 }
 
-const getAllMerchant = async (token) => {
-  try {
-    const response = await fetch(merchantEndPoint, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      merchantData.value = data.merchants;
-    } else {
-      const data = await response.json();
-      console.log(data);
-    }
-  } catch (error) {
-    console.groupEnd(error);
-  }
-};
+// const getAllMerchant = async (token) => {
+//   try {
+//     const response = await fetch(merchantEndPoint, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     if (response.ok) {
+//       const data = await response.json();
+//       console.log("fecth");
+//       localStorage.setItem("merchants", JSON.stringify(data.merchants));
+//     } else {
+//       const data = await response.json();
+//       console.log(data);
+//     }
+//   } catch (error) {
+//     console.groupEnd(error);
+//   }
+// };
 
+merchantData.value = JSON.parse(localStorage.getItem("m_data"));
+console.log(merchantData.value);
 const balances = ref([
   {
     balanceItems: [
@@ -258,7 +258,7 @@ const applyCredit = () => {
 };
 
 const payCredits = () => {
-  console.log("Pay credits...");
+  router.push({ name: "selection/payment" });
 };
 
 const loanStatus = () => {
@@ -282,7 +282,7 @@ const hideModal = () => {
     </ul>
   </template>
   <Services :services="servicesItem" @serviceClicked="servicesFunctions" />
-  <div class="pb-22">
+  <div class="pb-22" v-if="merchantData">
     <Merchants :item="merchantData" />
   </div>
   <div>

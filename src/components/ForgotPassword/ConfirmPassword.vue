@@ -3,38 +3,38 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import OTP from "../authentications/OTP.vue";
 const router = useRouter();
-const password = JSON.parse(sessionStorage.getItem("newPassword"));
+const password = ref("");
 const confirmPassword = ref("");
 const error = ref(null);
-
 const userId = JSON.parse(sessionStorage.getItem("userId"));
 const apiUrlUpdatePass = "http://localhost:5000/api/user/change-password";
 
 const handleChangePassword = async () => {
-  try {
-    const response = await fetch(apiUrlUpdatePass, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: userId,
-        newPassword: password,
-        confirmPassword: confirmPassword.value,
-      }),
-    });
+  sessionStorage.setItem("newPassword", JSON.stringify(password.value));
+  router.push({ name: "resetpassword" });
+  // try {
+  //   const response = await fetch(apiUrlUpdatePass, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({
+  //       id: userId,
+  //       newPassword: password.value,
+  //       confirmPassword: confirmPassword.value,
+  //     }),
+  //   });
 
-    const data = await response.json();
+  //   const data = await response.json();
 
-    if (response.ok) {
-      sessionStorage.removeItem("email");
-      sessionStorage.removeItem("mobileNo");
-      sessionStorage.removeItem("newPassword");
-      router.push({ name: "signin" });
-    } else {
-      error.value = data.message;
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  //   if (response.ok) {
+  //     sessionStorage.removeItem("userId");
+  //     sessionStorage.removeItem("mobileNo");
+  //     router.push({ name: "signin" });
+  //   } else {
+  //     error.value = data.message;
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
 };
 </script>
 
@@ -45,11 +45,11 @@ const handleChangePassword = async () => {
         for="password"
         class="block text-center text-xl font-medium leading-5 text-gray-700"
       >
-        Confirm New Password
+        New Passcode
       </label>
 
       <div class="mt-10 rounded-md shadow-sm relative">
-        <OTP :digit-count="6" @update:otp="confirmPassword = $event"></OTP>
+        <OTP :digit-count="6" @update:otp="password = $event"></OTP>
       </div>
     </div>
 

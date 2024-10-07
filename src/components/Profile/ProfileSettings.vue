@@ -7,7 +7,6 @@ const props = defineProps(["item"]);
 const handleVerification = () => {
   router.replace({ name: "choose/id" });
 };
-
 const profileMenu = ref([
   {
     id: 1,
@@ -188,13 +187,21 @@ const profileMenu = ref([
           <h3 class="mb-1.5 text-2xl font-medium text-black dark:text-white">
             {{ `${item.firstName} ${item.lastName} ` }}
           </h3>
+          <div>
+            <button
+              v-if="item.verification.status === `pending`"
+              class="border border-gray-400 p-2 rounded-md"
+            >
+              <p class="font-md text-sm font-semibold">On process</p>
+            </button>
+          </div>
           <button v-if="item.verification?.isVerified">
             <p class="font-md text-sm font-semibold">Verified</p>
           </button>
           <button
             class="border border-gray-400 p-2 rounded-md"
             @click="handleVerification"
-            v-else-if="!item.verification?.isVerified"
+            v-if="!item.verification.status === `new`"
           >
             <p class="font-md text-sm font-semibold">Verify now!</p>
           </button>

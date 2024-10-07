@@ -1,14 +1,12 @@
 <script setup>
 import { ref, toRaw, onMounted } from "vue";
-import MerchantsSelection from "../ApplyCredit/MerchantsSelection.vue";
+import MerchantsSelection from "../Credits/MerchantsSelection.vue";
 const props = defineProps(["services"]);
 const propService = ref(props.services);
 const services = toRaw(propService.value); // Convert Proxy to plain array
 import { defineEmits } from "vue";
 
 const emit = defineEmits(["serviceClicked"]);
-
-
 
 // const unHide = (servicesItem) => {
 //   switch (servicesItem.id) {
@@ -25,8 +23,6 @@ const emit = defineEmits(["serviceClicked"]);
 //       console.log(`No function defined for service ${services}`);
 //   }
 // };
-
-
 </script>
 
 <template>
@@ -51,6 +47,5 @@ const emit = defineEmits(["serviceClicked"]);
         </button>
       </div>
     </div>
-  
   </div>
 </template>

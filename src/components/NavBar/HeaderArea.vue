@@ -6,7 +6,7 @@ import DropdownNotification from "./DropdownNotification.vue";
 const { toggleSidebar } = useSidebarStore();
 const sidebarStore = useSidebarStore();
 
-getUserProfileFromCookie();
+// getUserProfileFromCookie();
 let userProfileData = ref("");
 let fullName = ref("");
 let email = ref("");
@@ -32,7 +32,8 @@ async function getUserProfileFromCookie() {
 
   if (userProfileCookie) {
     const token = JSON.parse(decodeURIComponent(userTokenCookie));
-    const userProfile = JSON.parse(decodeURIComponent(userProfileCookie));
+    const userProfile = JSON.parse(localStorage.getItem("u_data"));
+    console.log(userProfile);
     userProfileData.value = userProfile;
     fullName.value = `${userProfile.firstName} ${userProfile.lastName}`;
     email.value = userProfile.email;

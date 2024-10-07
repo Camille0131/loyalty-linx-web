@@ -9,7 +9,6 @@ onMounted(() => {
   initCollapses();
 });
 
-getUserProfileFromCookie();
 // const useAuthStore = authStore();
 
 let userProfileData = ref("");
@@ -20,37 +19,11 @@ let profilePhoto = ref("");
 // const navbarStore = useNavbarStore();
 const router = useRouter();
 
-async function getCookieAsync(name) {
-  return new Promise((resolve, reject) => {
-    const nameEQ = name + "=";
-    const cookiesArray = document.cookie.split(";");
-    for (let i = 0; i < cookiesArray.length; i++) {
-      let cookie = cookiesArray[i].trim();
-      if (cookie.indexOf(nameEQ) === 0) {
-        resolve(cookie.substring(nameEQ.length, cookie.length));
-        return;
-      }
-    }
-    resolve(null); // Return null if the cookie is not found
-  });
-}
-
-async function getUserProfileFromCookie() {
-  const userTokenCookie = await getCookieAsync("u_TOK");
-  const userProfileCookie = await getCookieAsync("u_PRO");
-
-  if (userProfileCookie) {
-    const token = JSON.parse(decodeURIComponent(userTokenCookie));
-    const userProfile = JSON.parse(decodeURIComponent(userProfileCookie));
-    userProfileData.value = userProfile;
-    fullName.value = `${userProfile.firstName} ${userProfile.lastName}`;
-    email.value = userProfile.email;
-    profilePhoto.value = userProfile.profilePicture;
-    // Perform additional actions with the user profile
-  } else {
-    console.log("User token cookie not found");
-  }
-}
+const userProfile = JSON.parse(localStorage.getItem("u_data"));
+userProfileData.value = userProfile;
+fullName.value = `${userProfile.firstName} ${userProfile.lastName}`;
+email.value = userProfile.email;
+profilePhoto.value = userProfile.profilePicture;
 
 function deleteAllCookies() {
   // Get all cookies as an array of name=value pairs

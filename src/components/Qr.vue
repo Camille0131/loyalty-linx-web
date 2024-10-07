@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import html2canvas from "html2canvas";
 
-import VueQrcode from "vue-qrcode";
+// import VueQrcode from "vue-qrcode";
 const text = ref("");
 const qrCode = ref(null);
 const token = ref("");
@@ -94,13 +94,13 @@ onMounted(() => {
     </form> -->
     <div class="bg-white px-2 py-10">
       <div v-if="qrCode" class="qr-code-container" ref="qrCodeContainer">
-        <VueQrcode
+        <!-- <VueQrcode
           type="image/png"
           :value="qrCode"
           class="w-100"
           background="#fff"
           :color="{ dark: '#000', light: '#fff' }"
-        />
+        /> -->
         <div class="qr-code-overlay">
           <!-- <img src="logo.png" alt="Logo" class="qr-code-logo" /> -->
         </div>

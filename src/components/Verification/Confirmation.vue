@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import InputComponent from "./InputComponent.vue";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 
@@ -15,21 +16,86 @@ const zipcode = JSON.parse(localStorage.getItem("z-code"));
 const gender = JSON.parse(localStorage.getItem("gender"));
 const incomeSource = JSON.parse(localStorage.getItem("i-source"));
 const monthlyIncome = JSON.parse(localStorage.getItem("m-income"));
+const tokenCookie = ref(null);
 
 const verificationEndPoint =
   "http://localhost:5000/api/user/account-verification/update";
-
-console.log(takenPhoto);
 
 const handleBack = () => {
   router.back();
 };
 
-const handleSubmit = async () => {
-  try{
-  }catch(error){
+getCookieTokenAsync("u_TOK");
 
+//  Get token from cookies
+async function getCookieAsync(name) {
+  return new Promise((resolve, reject) => {
+    const nameEQ = name + "=";
+    const cookiesArray = document.cookie.split(";");
+    for (let i = 0; i < cookiesArray.length; i++) {
+      let cookie = cookiesArray[i].trim();
+      if (cookie.indexOf(nameEQ) === 0) {
+        resolve(cookie.substring(nameEQ.length, cookie.length));
+        return;
+      }
+    }
+    resolve(null); // Return null if the cookie is not found
+  });
+}
+
+async function getCookieTokenAsync(name) {
+  try {
+    const cookieValue = await getCookieAsync(name);
+    if (cookieValue) {
+      tokenCookie.value = JSON.parse(decodeURIComponent(cookieValue));
+    } else {
+      console.log("Token cookie not found");
+    }
+  } catch (error) {
+    console.error("Error getting token cookie:", error);
   }
+}
+
+const handleSubmit = async () => {
+  try {
+    const response = await fetch(verificationEndPoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenCookie.value}`,
+      },
+
+      body: JSON.stringify({
+        birthdate: bDay,
+        gender: gender,
+        address: address,
+        city: municipal,
+        province: province,
+        country: "Philippines",
+        postalCode: zipcode,
+        validId: takenPhoto,
+        selfiePicture: takenSelfirePhoto,
+        incomeSoure: incomeSource,
+        monthlySalary: monthlyIncome,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+    if (response.ok) {
+      Swal.fire({
+        title: "Verification request complete!",
+        text: data.message,
+        icon: "success",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.replace("/home");
+        }
+      });
+    } else {
+      console.log(data);
+      console.log(data.message);
+    }
+  } catch (error) {}
 };
 </script>
 

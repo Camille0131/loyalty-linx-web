@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import "intl-tel-input/build/css/intlTelInput.css";
-import intlTelInput from "intl-tel-input";
+// import "intl-tel-input/build/css/intlTelInput.css";
+// import intlTelInput from "intl-tel-input";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const mobileNo = ref("");
+const email = ref("");
 const error = ref(null);
 const findAccount = "http://localhost:5000/api/user/find-account";
 
@@ -13,12 +13,12 @@ const iti = ref({});
 
 onMounted(() => {
   const input = document.querySelector("#mobieNo");
-  iti.value = intlTelInput(input, {
-    utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
-    containerClass: "w-full",
-    initialCountry: "PH",
-    strictMode: true,
-  });
+  // iti.value = intlTelInput(input, {
+  //   utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
+  //   containerClass: "w-full",
+  //   initialCountry: "PH",
+  //   strictMode: true,
+  // });
 });
 
 const submit = async () => {
@@ -27,14 +27,15 @@ const submit = async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        mobileNo: mobileNo.value,
+        email: email.value,
       }),
     });
 
     const data = await response.json();
 
     if (response.ok) {
-      sessionStorage.setItem("mobileNo", JSON.stringify(mobileNo.value));
+      // sessionStorage.setItem("mobileNo", JSON.stringify(mobileNo.value));
+      sessionStorage.setItem("email", JSON.stringify(email.value));
       sessionStorage.setItem("userId", JSON.stringify(data.userId));
       router.push({ name: "forgotpassword/otp" });
     } else {
@@ -46,24 +47,24 @@ const submit = async () => {
   }
 };
 const validateMobileNo = () => {
-  const mobileNumber = mobileNo.value.replace(/\s+/g, ""); // remove all spaces
-  mobileNo.value = mobileNumber;
-  if (iti.value.isValidNumber()) {
-    submit();
-  }
+  // const mobileNumber = mobileNo.value.replace(/\s+/g, ""); // remove all spaces
+  // mobileNo.value = mobileNumber;
+  // if (iti.value.isValidNumber()) {
+  submit();
+  // }
 };
 </script>
 <template>
   <div class="px-6 flex flex-col justify-center h-[20rem]">
-    <h2 class="font-bold mx-4 text-xl mt-6">Enter your mobile No</h2>
+    <h2 class="font-bold mx-4 text-xl mt-6">Enter your Email</h2>
 
     <div class="mt-4 relative rounded-md shadow-sm">
       <input
-        v-model="mobileNo"
-        id="mobieNo"
-        name="mobieNo"
+        v-model="email"
+        id="email"
+        name="email"
         placeholder=""
-        type="tel"
+        type="email"
         required="true"
         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-sm placeholder-gray-400 focus:outline-none focus:border-amber-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
       />

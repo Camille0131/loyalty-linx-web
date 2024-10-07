@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import "intl-tel-input/build/css/intlTelInput.css";
-import intlTelInput from "intl-tel-input";
+// import "intl-tel-input/build/css/intlTelInput.css";
+// import intlTelInput from "intl-tel-input";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
-import { el } from "intl-tel-input/i18n";
+// import { el } from "intl-tel-input/i18n";
 
 const router = useRouter();
 const mobileNo = ref("");
@@ -77,16 +77,15 @@ const handleConfirmPasswordVisible = () =>
 //Handle mounted intl mobile phone number input
 onMounted(() => {
   const input = document.querySelector("#mobieNo");
-  iti.value = intlTelInput(input, {
-    utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
-    containerClass: "w-full",
-    initialCountry: "PH",
-    strictMode: true,
-  });
+  // iti.value = intlTelInput(input, {
+  //   utilsScript: "/node_modules/intl-tel-input/build/js/utils.js",
+  //   containerClass: "w-full",
+  //   initialCountry: "PH",
+  //   strictMode: true,
+  // });
 });
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
-
 
 async function saveUserDataPrimary(data, name) {
   try {
@@ -131,10 +130,10 @@ const validateInfos = async () => {
 const validateMobileNo = () => {
   const mobileNumber = mobileNo.value.replace(/\s+/g, ""); // remove all spaces
   mobileNo.value = mobileNumber;
-  if (iti.value.isValidNumber()) {
-    // handleRegister();
-    validateInfos();
-  }
+  // if (iti.value.isValidNumber()) {
+  // handleRegister();
+  validateInfos();
+  // }
 };
 </script>
 
@@ -179,7 +178,15 @@ const validateMobileNo = () => {
               >Mobile No</label
             >
             <div class="mt-1 relative rounded-md shadow-sm">
-              <input
+              <vue-tel-input
+                :inputOptions="{ maxlength: 11 }"
+                v-model="mobileNo"
+                id="mobieNo"
+                name="mobieNo"
+                class="rounded-md border p-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+
+              <!-- <input
                 v-model="mobileNo"
                 id="mobieNo"
                 name="mobieNo"
@@ -187,7 +194,7 @@ const validateMobileNo = () => {
                 type="tel"
                 required="true"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-amber focus:border-amber-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-              />
+              /> -->
               <div
                 class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
               >

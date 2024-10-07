@@ -127,13 +127,13 @@ const text = ref([
         <div class="my-auto">
           <LandingText :item="text" />
           <div class="flex justify-center">
-            <router-link to="/register/merchant">
-              <button
-                class="mx-auto px-5 py-2 my-2 text-lg font-medium bg-amber-600 rounded-md text-white hover:bg-amber-700"
-              >
-                Join as Partner Merchant
-              </button>
-            </router-link>
+            <!-- <router-link to="/register/merchant"> -->
+            <button
+              class="mx-auto px-5 py-2 my-2 text-lg font-medium bg-amber-600 rounded-md text-white hover:bg-amber-700"
+            >
+              Join as Partner Merchant
+            </button>
+            <!-- </router-link> -->
           </div>
         </div>
       </div>

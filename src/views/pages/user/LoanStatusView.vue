@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import LoanStatusLanding from "../../../components/ApplyCredit/LoanStatusLanding.vue";
+import LoanStatusLanding from "../../../components/Credits/LoanStatusLanding.vue";
 </script>
 
 <template>

@@ -15,11 +15,7 @@ const props = defineProps(["data", "index"]);
     >
       <div class="flex col-span-1 w-auto items-center p-2.5 xl:p-5">
         <div class="flex-shrink-0 border p-3 rounded-lg">
-          <img
-            src="../../assets/img/bag-shopping-solid.svg"
-            alt=""
-            class="h-10"
-          />
+          <img :src="data.merchantLogo" alt="" class="h-10" />
         </div>
       </div>
 
@@ -28,17 +24,29 @@ const props = defineProps(["data", "index"]);
           <p
             class="text-gray-700 text-lg font-semibold dark:text-white sm:block"
           >
-            {{ data.name }}
+            {{ data.transactionType }}
           </p>
         </div>
         <div>
           <p class="text-black dark:text-white text-sm sm:block">
-            {{ data.action }}
+            {{ data.description }}
           </p>
         </div>
         <div>
-          <p class="text-gray-500 text-s m dark:text-white sm:block">
-            {{ data.dateAndTime }}
+          <p
+            v-if="data.date"
+            class="text-gray-500 text-sm dark:text-white sm:block"
+          >
+            {{
+              new Intl.DateTimeFormat("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              }).format(new Date(data.date))
+            }}
           </p>
         </div>
       </div>
@@ -46,7 +54,7 @@ const props = defineProps(["data", "index"]);
       <div
         class="flex flex-2 items-center justify-center text-center p-2.5 xl:p-5"
       >
-        <p class="text-black dark:text-white">+{{ data.points }}</p>
+        <p class="text-black dark:text-white">+{{ data.amount }}</p>
       </div>
     </div>
   </div>

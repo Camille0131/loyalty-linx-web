@@ -69,7 +69,7 @@ async function getCookieUserProfileAsync(name) {
     if (cookieValue) {
       userProfile.value = JSON.parse(decodeURIComponent(cookieValue));
     } else {
-      console.log("userProfile cookie not found");
+      // console.log("userProfile cookie not found");
     }
   } catch (error) {
     console.error("Error getting token cookie:", error);
@@ -81,7 +81,7 @@ async function getCookieUserCredsAsync(name) {
     if (cookieValue) {
       credits.value = JSON.parse(decodeURIComponent(cookieValue));
     } else {
-      console.log("userProfile cookie not found");
+      // console.log("userProfile cookie not found");
     }
   } catch (error) {
     console.error("Error getting token cookie:", error);
@@ -100,7 +100,7 @@ async function getCookieUserCredReqsAsync(name) {
 
       console.log();
     } else {
-      console.log("userProfile cookie not found");
+      // console.log("userProfile cookie not found");
     }
   } catch (error) {
     console.error("Error getting token cookie:", error);
@@ -130,7 +130,6 @@ async function getCookieUserCredReqsAsync(name) {
 // };
 
 merchantData.value = JSON.parse(localStorage.getItem("m_data"));
-console.log(merchantData.value);
 const balances = ref([
   {
     balanceItems: [

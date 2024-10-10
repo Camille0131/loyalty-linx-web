@@ -1,15 +1,15 @@
 <template>
   <ShopNav @search-query="filterProductsBySearch" />
 
-  <div class="max-w-7xl mx-auto p-6 bg-gray-200">
+  <div class="max-w-7xl mx-auto p-2 bg-gray-200">
     <!-- Carousel Section for Ads -->
-    <div class="mb-8 relative">
+    <div class="mb-2 relative">
       <div
         class="absolute top-4 left-4 bg-black bg-opacity-50 px-4 py-2 rounded-md"
       >
         <h2 class="text-white text-2xl font-semibold">Our Deals</h2>
       </div>
-      <div class="relative w-full h-64 overflow-hidden rounded-lg shadow-lg">
+      <div class="relative w-full h-64 overflow-hidden rounded-md">
         <div
           class="carousel flex transition-transform duration-500 ease-in-out"
           :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
@@ -44,36 +44,53 @@
       </div>
     </div>
 
-    <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
+    <!-- <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
       Product List
-    </h1>
+    </h1> -->
 
     <!-- Credit Score Section -->
-    <div
-      class="mb-6 p-6 rounded-lg shadow-md"
-      :class="['bg-gradient-to-r', 'from-yellow-400', 'to-orange-600']"
-    >
-      <h2 class="text-2xl font-bold text-amber-800 mb-2">20,000 Credits</h2>
-      <p>Available credits</p>
+    <div class="bg-white p-2 mb-2">
+      <div
+        class="p-6 rounded-md shadow-md"
+        :class="['bg-gradient-to-r', 'from-amber-300', 'to-amber-600']"
+      >
+        <h2 class="text-2xl font-bold text-amber-800 mb-2">
+          {{
+            new Intl.NumberFormat("en-PH", {
+              style: "decimal",
+              minimumFractionDigits: 2,
+            }).format(creditsBalance)
+          }}
+        </h2>
+        <h1 class="text-gray-700 font-semibold">Available Credits...</h1>
+      </div>
     </div>
 
     <!-- Scrollable Category Buttons -->
-    <div
-      class="mb-6 overflow-x-auto whitespace-nowrap no-scrollbar flex space-x-4 px-2"
-    >
-      <button
-        v-for="category in categories"
-        :key="category._id"
-        @click="filterProductsByCategory(category._id)"
-        class="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-yellow-600"
+    <div class="bg-white p-2 mb-2 rounded-md">
+      <div class="px-2 py-1">
+        <h1 class="text-gray-700 font-semibold">CATEGORIES</h1>
+      </div>
+      <div
+        class="overflow-x-auto whitespace-nowrap no-scrollbar flex space-x-2 px-2"
       >
-        {{ category.categoryName }}
-      </button>
-    </div>
+        <button
+          v-for="category in categories"
+          :key="category._id"
+          @click="filterProductsByCategory(category._id)"
+          class="px-4 py-2 bg-white border shadow-1 text-gray-700 rounded-md hover:bg-gray-50"
+        >
+          {{ category.categoryName }}
+        </button>
+      </div>
 
-    <!-- Loading state -->
-    <div v-if="loading" class="text-center text-lg font-semibold text-gray-600">
-      Loading...
+      <!-- Loading state -->
+      <div
+        v-if="loading"
+        class="text-center text-lg font-semibold text-gray-600"
+      >
+        Loading...
+      </div>
     </div>
 
     <!-- No products available message -->
@@ -87,12 +104,12 @@
     <!-- Products Grid -->
     <div
       v-if="!loading"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-20"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-20"
     >
       <div
         v-for="product in filteredProducts"
         :key="product._id"
-        class="bg-white p-4 rounded-lg shadow-md flex flex-col cursor-pointer"
+        class="bg-white p-4 rounded-sm flex flex-col cursor-pointer"
         @click="goToProductDetails(product._id)"
       >
         <img
@@ -112,19 +129,26 @@
         <!-- Add to Cart button -->
         <button
           @click.stop="addToCart(product)"
-          class="bg-amber-500 text-white px-4 py-2 rounded hover:bg-orange-600 mt-2"
+          class="bg-amber-100 border border-amber-600 text-white px-4 py-2 rounded hover:bg-orange-200 mt-2"
         >
-          Add to Cart
+          <img
+            src="../../assets/img/icons/add-to-the-cart-svgrepo-com.svg"
+            alt="Cart"
+            class="h-6 w-6 inline-block"
+          />
+          <span class="text-sm text-amber-600">Add to Cart </span>
         </button>
       </div>
     </div>
   </div>
   <!-- <NavBar /> -->
+  <BottomNavigation />
 </template>
 
 <script>
 import Swal from "sweetalert2";
 import ShopNav from "../NavBar/ShopNav.vue";
+import BottomNavigation from "../NavBar/BottomNavigation.vue";
 // import NavBar from "@/components/Navbar/Navbar.vue";
 
 export default {
@@ -137,10 +161,13 @@ export default {
   },
   components: {
     ShopNav,
+    BottomNavigation,
     // NavBar,
   },
   data() {
     return {
+      token: JSON.parse(localStorage.getItem("token")),
+      creditsBalance: JSON.parse(sessionStorage.getItem("u_CRDBAl")),
       products: [],
       filteredProducts: [],
       categories: [],
@@ -155,21 +182,23 @@ export default {
     await this.fetchCategories();
     this.startCarousel();
   },
+
   methods: {
     truncateName(text) {
       return text.length > 20 ? text.substring(0, 20) + "..." : text;
+      s;
     },
     getImageUrl(image) {
       // return new URL(`../assets/images/ads/${image}`, import.meta.url).href;
       return new URL(`../../assets/img/ads/${image}`, import.meta.url).href;
     },
     goToProductDetails(productId) {
-      this.$router.push({ name: "ProductDetails", params: { id: productId } });
+      this.$router.push({ name: "product/details", params: { id: productId } });
     },
-    
+
     async fetchProducts() {
       try {
-        let url = "/API/Products";
+        let url = "http://localhost:5000/api/product/products";
         if (this.searchQuery) {
           url += `?searchQuery=${encodeURIComponent(this.searchQuery)}`;
         }
@@ -192,7 +221,9 @@ export default {
     },
     async fetchCategories() {
       try {
-        const response = await fetch("/API/category/getAllCategories");
+        const response = await fetch(
+          "http://localhost:5000/api/category/getAllCategories"
+        );
         const data = await response.json();
         this.categories = data.allCategories;
       } catch (error) {
@@ -222,22 +253,54 @@ export default {
       }, 3000);
     },
     // Add to Cart logic
-    addToCart(product) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    async addToCart(product) {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/user/add-to-cart",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.token.token}`,
+            },
+            body: JSON.stringify({
+              productId: product._id,
+              quantity: 1,
+            }),
+          }
+        );
+        const data = response.json();
+        if (response.ok) {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const productInCart = cart.find((item) => item._id === product._id);
+          if (productInCart) {
+            productInCart.quantity += 1; // If product exists, increase the quantity
+          } else {
+            cart.push({ ...product, quantity: 1, isSelected: false }); // If not, add the product with quantity 1
+          }
 
-      const productInCart = cart.find((item) => item._id === product._id);
-      if (productInCart) {
-        productInCart.quantity += 1; // If product exists, increase the quantity
-      } else {
-        cart.push({ ...product, quantity: 1 }); // If not, add the product with quantity 1
+          localStorage.setItem("cart", JSON.stringify(cart));
+          Swal.fire({
+            icon: "success",
+            title: "Added to Cart",
+            text: `${product.name} has been added to your cart!`,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "",
+            text: `${product.name} has already added to your cart!`,
+          });
+          // console.log("failed" + data);
+        }
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "",
+          text: `${error} `,
+        });
       }
-
-      localStorage.setItem("cart", JSON.stringify(cart));
-      Swal.fire({
-        icon: "success",
-        title: "Added to Cart",
-        text: `${product.name} has been added to your cart!`,
-      });
     },
   },
 };

@@ -115,7 +115,7 @@ async function getCookieTokenAsync(name) {
       tokenCookie.value = JSON.parse(decodeURIComponent(cookieValue));
       // console.log("Token cookie value: ", tokenCookie.value);
     } else {
-      console.log("Token cookie not found");
+      // console.log("Token cookie not found");
     }
   } catch (error) {
     console.error("Error getting token cookie:", error);
@@ -129,7 +129,7 @@ async function getCookieProfileAsync(name) {
       userProfile.value = JSON.parse(decodeURIComponent(cookieValue));
       // console.log("Token cookie value: ", userProfile.value);
     } else {
-      console.log("Token cookie not found");
+      // console.log("Token cookie not found");
     }
   } catch (error) {
     console.error("Error getting token cookie:", error);
@@ -143,7 +143,7 @@ async function getCookieUserIdAsync(name) {
       userId.value = JSON.parse(decodeURIComponent(cookieValue));
       // console.log(" Mobile value:");
     } else {
-      console.log("Mobile not found");
+      // console.log("Mobile not found");
     }
   } catch (error) {
     console.error("Error getting token cookie:", error);
@@ -229,7 +229,7 @@ const getUserProfile = async (token) => {
       localStorage.setItem("u_data", JSON.stringify(data.userProfile));
       localStorage.setItem("qrCode", JSON.stringify(data.userProfile.qrCode));
       userStore.setToken(token);
-      authStores.login();
+      authStores.login(token);
       router.replace("/home");
     } else {
       error.value = "Error fetching user profile";

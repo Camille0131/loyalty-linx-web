@@ -21,11 +21,8 @@ const handleRefreshCode = async (idUser) => {
     });
 
     const data = await response.json();
-    // console.log(data.message);
     if (response.ok) {
-      // console.log(data.message);
     } else {
-      // console.log(data.message);
     }
   } catch (error) {
     console.log(error);

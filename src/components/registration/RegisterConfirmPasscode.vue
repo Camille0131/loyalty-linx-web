@@ -85,8 +85,6 @@ async function saveUserData(data, name) {
 //Handle register method
 const handleRegister = async (e) => {
   // e.preventDefault();
-  console.log("bineub");
-
   try {
     // Fetch method
     const response = await fetch(urlRegister, {

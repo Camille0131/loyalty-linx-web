@@ -251,7 +251,25 @@ const routes = [
     name: "product/list",
     component: () => import("../components/Shop/ProductList.vue"),
     meta: {
-      title: "",
+      title: "Shop",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/shop/cart/",
+    name: "cart",
+    component: () => import("../components/Shop/Cart.vue"),
+    meta: {
+      title: "Cart",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/product/details/:id",
+    name: "product/details",
+    component: () => import("../components/Shop/ProductDetails.vue"),
+    meta: {
+      title: "Cart",
       requiresAuth: true,
     },
   },
@@ -282,8 +300,15 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = authStoreInstance.isAuthenticated;
   const token = localStorage.getItem("a_TOK");
   document.title = `Loyalty linx ${to.meta.title} | Your trust partner in businesss `;
+  if (token && !isAuthenticated) {
+    // If the user has a token, assume they are authenticated
+    authStoreInstance.isAuthenticated = true;
+    authStoreInstance.token = token;
+    // Redirect to /home if the user has a valid token
+    return next({ path: to.path });
+  }
 
-  if (to.meta.requiresAuth && !isAuthenticated && !token) {
+  if (to.meta.requiresAuth && !isAuthenticated) {
     // If the route requires authentication and the user is not authenticated, redirect to signin
     return next({ path: "/signin", query: { redirect: to.fullPath } });
   }
@@ -296,14 +321,6 @@ router.beforeEach((to, from, next) => {
   if (isAuthenticated && to.path === "/register") {
     // If the user is already authenticated and tries to access register, redirect to current page
     return next({ path: "/home" });
-  }
-
-  if (token && !isAuthenticated) {
-    // If the user has a token, assume they are authenticated
-    authStoreInstance.isAuthenticated = true;
-    authStoreInstance.token = token;
-    // Redirect to /home if the user has a valid token
-    return next({ path: to.path });
   }
 
   if (token && to.path === "/") {

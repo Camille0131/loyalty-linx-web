@@ -17,8 +17,8 @@ const handleChangePassword = async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         id: userId,
-        newPassword: password,
-        confirmPassword: confirmPassword.value,
+        newPasscode: password,
+        confirmPasscode: confirmPassword.value,
       }),
     });
 

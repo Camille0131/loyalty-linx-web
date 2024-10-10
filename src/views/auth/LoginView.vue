@@ -138,33 +138,6 @@ const handleSubmit = async (e) => {
   }
 };
 
-// Start of Get User Profile API request
-const getUserProfile = async (token) => {
-  try {
-    const response = await fetch(urlProfile, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.ok) {
-      const authStores = authStore();
-
-      // Handle data store response from API request SIGNIN
-      const data = await response.json();
-
-      saveUserData(data.userProfile, "u_PRO");
-      authStores.login();
-      router.push("/home");
-    } else {
-      error.value = "Error fetching user profile";
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 // End of Get User Profile API request
 
 const generatedToken = () => {

@@ -42,7 +42,7 @@ function deleteAllCookies() {
 </script>
 
 <template>
-  <nav class="mt-5 border-gray-200 dark:bg-gray-900">
+  <nav class="border-gray-200 dark:bg-gray-900">
     <div
       class="max-w-screen-xl bg-white rounded-3xl flex flex-wrap items-center justify-between mx-auto p-4"
     >

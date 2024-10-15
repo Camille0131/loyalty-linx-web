@@ -177,7 +177,7 @@ export default {
     async loadCart() {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/user/get-item-cart",
+          "https://loyalty-linxapi.vercel.app/api/user/get-item-cart",
           {
             method: "POST",
             headers: {
@@ -223,7 +223,7 @@ export default {
     async updateQuantity(productId, action) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/user/quantity-item-cart",
+          "https://loyalty-linxapi.vercel.app/api/user/quantity-item-cart",
           {
             method: "POST",
             headers: {
@@ -276,7 +276,7 @@ export default {
     async removeFromCart(productId) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/user/delete-item-cart",
+          "https://loyalty-linxapi.vercel.app/api/user/delete-item-cart",
           {
             method: "POST",
             headers: {

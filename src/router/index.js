@@ -323,17 +323,18 @@ router.beforeEach((to, from, next) => {
     return next({ path: "/home" });
   }
 
-  if (token && to.path === "/") {
-    return next({ path: "/link/passcode" });
-  }
-  clearTimeout(timeoutId);
+  // if (isAuthenticated && to.path === "/") {
+  //   return next({ path: "/link/passcode" });
+  // }
 
-  if (token) {
-    timeoutId = setTimeout(() => {
-      router.push({ path: "/link/passcode" });
-    }, inactivityTimeout);
-  }
+  // if (isAuthenticated) {
+  //   timeoutId = setTimeout(() => {
+  //     router.push({ path: "/link/passcode" });
+  //   }, inactivityTimeout);
+  // }
   // Set the inactivity timer
+
+  clearTimeout(timeoutId);
 
   // 600000
   next();

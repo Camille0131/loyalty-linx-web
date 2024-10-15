@@ -4,7 +4,7 @@ import OtpPassocode from "./otpPassocode.vue";
 import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
 
-const urlRegister = "http://localhost:5000/api/user/register";
+const urlRegister = "https://loyalty-linxapi.vercel.app/api/user/register";
 const otpValue = ref("");
 const router = useRouter();
 const error = ref(null);

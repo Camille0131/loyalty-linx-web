@@ -16,7 +16,8 @@ import MerchantsSelection from "./Credits/MerchantsSelection.vue";
 import { useUserStore } from "../stores/user";
 import Merchants from "./merchants/Merchants.vue";
 import { useRouter } from "vue-router";
-const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
+const merchantEndPoint =
+  "https://loyalty-linxapi.vercel.app/api/merchant/get-all";
 
 const router = useRouter();
 let merchantData = ref([]);

@@ -74,10 +74,12 @@ const handleKeyDown = function (event, index) {
       required
       @keydown="handleKeyDown($event, ind)"
       type="text"
+      pattern="[0-9]*"
       class="digit-box focus:outline-none"
       v-for="(el, ind) in digits"
       :key="el + ind"
       v-model="digits[ind]"
+      inputmode="numeric"
       :autofocus="ind === 0"
       maxlength="1"
       :class="{ bounce: digits[ind] !== null }"

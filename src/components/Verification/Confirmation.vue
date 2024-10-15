@@ -19,7 +19,7 @@ const monthlyIncome = JSON.parse(localStorage.getItem("m-income"));
 const tokenCookie = ref(null);
 
 const verificationEndPoint =
-  "http://localhost:5000/api/user/account-verification/update";
+  "https://loyalty-linxapi.vercel.app/api/user/account-verification/update";
 
 const handleBack = () => {
   router.back();

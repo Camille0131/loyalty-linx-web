@@ -8,7 +8,8 @@ const confirmPassword = ref("");
 const error = ref(null);
 
 const userId = JSON.parse(sessionStorage.getItem("userId"));
-const apiUrlUpdatePass = "http://localhost:5000/api/user/change-password";
+const apiUrlUpdatePass =
+  "https://loyalty-linxapi.vercel.app/api/user/change-password";
 
 const handleChangePassword = async () => {
   try {

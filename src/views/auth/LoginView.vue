@@ -6,9 +6,9 @@ import { useUserStore } from "../../stores/user";
 // import "intl-tel-input/build/css/intlTelInput.css";
 // import intlTelInput from "intl-tel-input";
 
-// const urlLogin = "http://localhost:5000/api/user/login";
-const urlLogin = "http://localhost:5000/api/user/login/mobileNo";
-const urlProfile = "http://localhost:5000/api/user/profile";
+// const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login";
+const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login/mobileNo";
+const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
 
 const email = ref("");
 const mobileNo = ref("");
@@ -211,6 +211,8 @@ const validateMobileNo = () => {
                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-sm placeholder-gray-400 focus:outline-none focus:shadow-outline-amber focus:border-amber-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                   /> -->
                   <vue-tel-input
+                    inputmode="numeric"
+                    pattern="[0-9]*"
                     :inputOptions="{
                       maxlength: 11,
                     }"

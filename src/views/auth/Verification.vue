@@ -14,10 +14,12 @@ const userId = ref("");
 let resendOtpInterval = null;
 const mobileNo = ref("");
 
-const urlSendOtp = "http://localhost:5000/api/user/send-otp";
-const urlVerification = "http://localhost:5000/api/user/validate-login";
-const urlProfile = "http://localhost:5000/api/user/profile";
-const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
+const urlSendOtp = "https://loyalty-linxapi.vercel.app/api/user/send-otp";
+const urlVerification =
+  "https://loyalty-linxapi.vercel.app/api/user/validate-login";
+const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
+const urlRefreshCode =
+  "https://loyalty-linxapi.vercel.app/api/user/refresh-code";
 // onMounted(() => {
 getCookieTokenAsync("u_TOK");
 getCookieMobileAsync("u_NO");

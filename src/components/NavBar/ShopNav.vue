@@ -46,7 +46,7 @@
         <input
           type="text"
           placeholder="Search products..."
-          class="px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="px-4 py-2 bg-gray-100 w-[70%] rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
           @input="onSearchInput"
         />
       </div>

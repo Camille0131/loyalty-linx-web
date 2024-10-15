@@ -134,9 +134,9 @@
           <img
             src="../../assets/img/icons/add-to-the-cart-svgrepo-com.svg"
             alt="Cart"
-            class="h-6 w-6 inline-block"
+            class="h-4 w-4 inline-block"
           />
-          <span class="text-sm text-amber-600">Add to Cart </span>
+          <span class="text-xs text-amber-600">Add to Cart </span>
         </button>
       </div>
     </div>
@@ -198,7 +198,7 @@ export default {
 
     async fetchProducts() {
       try {
-        let url = "http://localhost:5000/api/product/products";
+        let url = "https://loyalty-linxapi.vercel.app/api/product/products";
         if (this.searchQuery) {
           url += `?searchQuery=${encodeURIComponent(this.searchQuery)}`;
         }
@@ -222,7 +222,7 @@ export default {
     async fetchCategories() {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/category/getAllCategories"
+          "https://loyalty-linxapi.vercel.app/api/category/getAllCategories"
         );
         const data = await response.json();
         this.categories = data.allCategories;
@@ -256,7 +256,7 @@ export default {
     async addToCart(product) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/user/add-to-cart",
+          "https://loyalty-linxapi.vercel.app/api/user/add-to-cart",
           {
             method: "POST",
             headers: {

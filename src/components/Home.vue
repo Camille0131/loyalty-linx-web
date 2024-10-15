@@ -22,7 +22,8 @@ import { useRouter } from "vue-router";
 const creditAmount = JSON.parse(sessionStorage.getItem("u_CRDBAl"));
 const router = useRouter();
 let merchantData = ref([]);
-const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
+const merchantEndPoint =
+  "https://loyalty-linxapi.vercel.app/api/merchant/get-all";
 const userData = JSON.parse(localStorage.getItem("u_data"));
 
 const creditsHistory = ref([]);

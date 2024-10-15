@@ -12,17 +12,18 @@ const tokenCookie = ref(null);
 const userId = ref("");
 const userProfile = ref([]);
 
-// userProfile.value = JSON.parse(localStorage.getItem("u_data"));
+userProfile.value = JSON.parse(localStorage.getItem("u_data"));
 
-const loginPasscode = "http://localhost:5000/api/user/passcode";
-const urlProfile = "http://localhost:5000/api/user/profile";
-const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
+const loginPasscode = "https://loyalty-linxapi.vercel.app/api/user/passcode";
+const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
+const urlRefreshCode =
+  "https://loyalty-linxapi.vercel.app/api/user/refresh-code";
 
 const userStore = useUserStore();
 
 getCookieTokenAsync("u_TOK");
 getCookieUserIdAsync("u_ID");
-getCookieProfileAsync("u_PRO");
+// getCookieProfileAsync("u_PRO");
 
 // SaveCookie setter
 // async function setCookieAsync(name, value, days) {
@@ -122,19 +123,19 @@ async function getCookieTokenAsync(name) {
   }
 }
 //Get Token from cookies Function
-async function getCookieProfileAsync(name) {
-  try {
-    const cookieValue = await getCookieAsync(name);
-    if (cookieValue) {
-      userProfile.value = JSON.parse(decodeURIComponent(cookieValue));
-      // console.log("Token cookie value: ", userProfile.value);
-    } else {
-      // console.log("Token cookie not found");
-    }
-  } catch (error) {
-    console.error("Error getting token cookie:", error);
-  }
-}
+// async function getCookieProfileAsync(name) {
+//   try {
+//     const cookieValue = await getCookieAsync(name);
+//     if (cookieValue) {
+//       userProfile.value = JSON.parse(decodeURIComponent(cookieValue));
+//       // console.log("Token cookie value: ", userProfile.value);
+//     } else {
+//       // console.log("Token cookie not found");
+//     }
+//   } catch (error) {
+//     console.error("Error getting token cookie:", error);
+//   }
+// }
 
 async function getCookieUserIdAsync(name) {
   try {
@@ -201,6 +202,7 @@ const getUserProfile = async (token) => {
         credits: undefined,
         fullAddress: undefined,
         verification: undefined,
+        cart: undefined,
       };
 
       const credReq = data.userProfile.creditRequests;
@@ -295,7 +297,7 @@ const handleSignIn = async () => {
   <div class="px-4">
     <div class="p-4 mt-10">
       <div>
-        <div v-if="userProfile.firstName">
+        <div v-if="userProfile">
           <h1 class="font-semibold px-2 text-gray-800 text-xl">
             Hi! {{ userProfile.firstName }}
           </h1>

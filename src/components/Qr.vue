@@ -6,7 +6,8 @@ import html2canvas from "html2canvas";
 const text = ref("");
 const qrCode = ref(null);
 const token = ref("");
-const refreshQrEndPoint = "http://localhost:5000/api/user/refresh-qr";
+const refreshQrEndPoint =
+  "https://loyalty-linxapi.vercel.app/api/user/refresh-qr";
 const qrCodeContainer = ref(null);
 
 async function handleSaveQr() {

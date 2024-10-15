@@ -71,6 +71,8 @@ const handleKeyDown = function (event, index) {
 <template>
   <div ref="otpCont" class="flex justify-center">
     <input
+      inputmode="numeric"
+      pattern="[0-9]*"
       required
       @keydown="handleKeyDown($event, ind)"
       type="password"

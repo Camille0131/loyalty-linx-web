@@ -65,7 +65,7 @@ const hideModal = () => {
 };
 
 const merchantId = merchant?._id;
-const urlCreditRequest = `http://localhost:5000/api/user/${merchantId}/request-credit`;
+const urlCreditRequest = `https://loyalty-linxapi.vercel.app/api/user/${merchantId}/request-credit`;
 console.log(merchantId);
 // Computed property to format the credit amount with currency formatting
 

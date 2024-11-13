@@ -82,6 +82,7 @@
 
 <script>
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 export default {
   name: "HeaderBar",

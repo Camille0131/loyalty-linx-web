@@ -24,14 +24,10 @@ const props = defineProps(["data", "index"]);
           <p
             class="text-gray-700 text-lg font-semibold dark:text-white sm:block"
           >
-            {{ data.transactionType }}
-          </p>
-        </div>
-        <div>
-          <p class="text-black dark:text-white text-sm sm:block">
             {{ data.description }}
           </p>
         </div>
+
         <div>
           <p
             v-if="data.date"

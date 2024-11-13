@@ -273,6 +273,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/check-out/:id",
+    name: "check-out",
+    component: () => import("../components/Shop/CheckOut.vue"),
+    meta: {
+      title: "check-out",
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = createRouter({

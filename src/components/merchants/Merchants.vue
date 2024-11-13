@@ -2,10 +2,11 @@
 import { ref } from "vue";
 import ModalMerchants from "../Credits/ApplicationForm.vue";
 import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
 const limit = JSON.parse(sessionStorage.getItem("limit"));
 const balanceString = JSON.parse(sessionStorage.getItem("u_CRDBAl"));
 const balance = parseInt(balanceString); // convert balance to integer
-
+const router = useRouter();
 const newBalance = balance + 500;
 
 const props = defineProps(["item"]);
@@ -19,9 +20,12 @@ const hideModal = () => {
   showModal.value = false;
 };
 
-const unHideModal = () => {
+const unHideModal = (merchantGroup) => {
   if (newBalance < limit) {
-    showModal.value = true;
+    sessionStorage.setItem("merchantItem", JSON.stringify(merchantGroup));
+    router.push({
+      name: "apply/credit",
+    });
   } else {
     Swal.fire({
       title: "Request fail!",
@@ -29,10 +33,24 @@ const unHideModal = () => {
       icon: "error",
     }).then((result) => {
       if (result.isConfirmed) {
-        showModal.value = false;
+        router.replace("/home");
       }
     });
   }
+  // if (newBalance < limit) {
+  //   sessionStorage.setItem("merchantItem", JSON.stringify(merchantGroup));
+  //   showModal.value = true;
+  // } else {
+  //   Swal.fire({
+  //     title: "Request fail!",
+  //     text: "Limit exceed!",
+  //     icon: "error",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       showModal.value = false;
+  //     }
+  //   });
+  // }
 };
 </script>
 <template>
@@ -43,7 +61,7 @@ const unHideModal = () => {
     </div>
     <div class="grid grid-cols-3 gap-3 mx-auto px-5 max-w-100">
       <button
-        @click="unHideModal"
+        @click="unHideModal(merchantGroup)"
         v-for="merchantGroup in item"
         :key="merchantGroup.storeName"
         class="bg-white rounded-md p-2 hover:bg-gray-50"
@@ -98,7 +116,7 @@ const unHideModal = () => {
               </button>
             </div> -->
             <!-- Modal body -->
-            <ModalMerchants />
+            <!-- <ModalMerchants /> -->
           </div>
         </div>
       </div>

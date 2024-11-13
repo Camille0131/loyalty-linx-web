@@ -7,7 +7,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const email = ref("");
 const error = ref(null);
-const findAccount = "https://loyalty-linxapi.vercel.app/api/user/find-account";
+const findAccount = "http://localhost:5000/api/user/find-account";
 
 const iti = ref({});
 
@@ -69,7 +69,7 @@ const validateMobileNo = () => {
         class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-sm placeholder-gray-400 focus:outline-none focus:border-amber-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
       />
       <div
-        class="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
+        class="hidden absolute inset-y-0 right-0 pr-3 items-center pointer-events-none"
       >
         <svg
           class="h-5 w-5 text-red-500"

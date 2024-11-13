@@ -12,10 +12,7 @@ const balance = parseInt(balanceString); // convert balance to integer
 
 const newBalance = balance + 500;
 
-
-
 const handleMerchant = (merchantGroup) => {
-  // console.log(merchantGroup);
   if (newBalance < limit) {
     sessionStorage.setItem("merchantItem", JSON.stringify(merchantGroup));
     router.push({

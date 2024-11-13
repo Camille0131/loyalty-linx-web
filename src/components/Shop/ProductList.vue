@@ -112,12 +112,14 @@
         class="bg-white p-4 rounded-sm flex flex-col cursor-pointer"
         @click="goToProductDetails(product._id)"
       >
-        <img
-          v-if="product.image"
-          :src="product.image"
-          alt="Product Image"
-          class="w-full h-40 object-cover rounded-md mb-2"
-        />
+        <div class="h-60 flex items-center">
+          <img
+            v-if="product.image"
+            :src="product.image"
+            alt="Product Image"
+            class="w-auto h-auto object-cover rounded-md mb-2"
+          />
+        </div>
         <div class="flex-grow">
           <h2 class="text-lg font-bold text-gray-800 mb-1">
             {{ truncateName(product.name) }}
@@ -149,7 +151,6 @@
 import Swal from "sweetalert2";
 import ShopNav from "../NavBar/ShopNav.vue";
 import BottomNavigation from "../NavBar/BottomNavigation.vue";
-// import NavBar from "@/components/Navbar/Navbar.vue";
 
 export default {
   computed: {
@@ -198,7 +199,7 @@ export default {
 
     async fetchProducts() {
       try {
-        let url = "https://loyalty-linxapi.vercel.app/api/product/products";
+        let url = "http://localhost:5000/api/product/products";
         if (this.searchQuery) {
           url += `?searchQuery=${encodeURIComponent(this.searchQuery)}`;
         }
@@ -214,6 +215,7 @@ export default {
           icon: "error",
           title: "Error",
           text: "An error occurred while fetching products",
+          timer: 1500,
         });
       } finally {
         this.loading = false;
@@ -222,7 +224,7 @@ export default {
     async fetchCategories() {
       try {
         const response = await fetch(
-          "https://loyalty-linxapi.vercel.app/api/category/getAllCategories"
+          "http://localhost:5000/api/category/getAllCategories"
         );
         const data = await response.json();
         this.categories = data.allCategories;
@@ -256,7 +258,7 @@ export default {
     async addToCart(product) {
       try {
         const response = await fetch(
-          "https://loyalty-linxapi.vercel.app/api/user/add-to-cart",
+          "http://localhost:5000/api/user/add-to-cart",
           {
             method: "POST",
             headers: {
@@ -276,14 +278,15 @@ export default {
           if (productInCart) {
             productInCart.quantity += 1; // If product exists, increase the quantity
           } else {
-            cart.push({ ...product, quantity: 1, isSelected: false }); // If not, add the product with quantity 1
+            cart.push({ ...product, quantity: 1 }); // If not, add the product with quantity 1
           }
 
           localStorage.setItem("cart", JSON.stringify(cart));
           Swal.fire({
             icon: "success",
-            title: "Added to Cart",
             text: `${product.name} has been added to your cart!`,
+            showConfirmButton: false,
+            timer: 1300,
           });
         } else {
           Swal.fire({

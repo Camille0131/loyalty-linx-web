@@ -9,15 +9,18 @@ import ShopPath from "../assets/img/points/shop-2-svgrepo-com.svg";
 import { useRouter } from "vue-router";
 
 const props = defineProps(["item", "index"]);
+const userData = JSON.parse(localStorage.getItem("u_data"));
 
 const router = useRouter();
+const pointsBalance = ref(0);
+pointsBalance.value = userData.pointsBalance;
 
 const balances = ref([
   {
     balanceItems: [
       {
         label: "Available points",
-        value: "242",
+        value: pointsBalance,
         id: 2,
       },
     ],
@@ -40,8 +43,6 @@ const servicesItem = ref([
     path: ShopPath,
   },
 ]);
-
-const userData = JSON.parse(localStorage.getItem("u_data"));
 
 const creditsHistory = ref([]);
 creditsHistory.value = userData.transactionHistory;

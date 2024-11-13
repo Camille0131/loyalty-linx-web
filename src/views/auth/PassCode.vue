@@ -14,10 +14,9 @@ const userProfile = ref([]);
 
 userProfile.value = JSON.parse(localStorage.getItem("u_data"));
 
-const loginPasscode = "https://loyalty-linxapi.vercel.app/api/user/passcode";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
-const urlRefreshCode =
-  "https://loyalty-linxapi.vercel.app/api/user/refresh-code";
+const loginPasscode = "http://localhost:5000/api/user/passcode";
+const urlProfile = "http://localhost:5000/api/user/profile";
+const urlRefreshCode = "http://localhost:5000/api/user/refresh-code";
 
 const userStore = useUserStore();
 

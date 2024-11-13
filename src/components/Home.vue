@@ -18,26 +18,61 @@ import TransactionHistoryModal from "./modal/TransactionHistoryModal.vue";
 import MerchantsSelection from "./Credits/MerchantsSelection.vue";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
-
 const creditAmount = JSON.parse(sessionStorage.getItem("u_CRDBAl"));
 const router = useRouter();
 let merchantData = ref([]);
-const merchantEndPoint =
-  "https://loyalty-linxapi.vercel.app/api/merchant/get-all";
+const historyEndPoint =
+  "http://localhost:5000/api/transactions/get-user-transactions";
+const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
 const userData = JSON.parse(localStorage.getItem("u_data"));
-
+const token = localStorage.getItem("a_TOK");
 const creditsHistory = ref([]);
+const pointsHistory = ref([]);
+const transactionsHistory = ref([]);
 creditsHistory.value = userData.transactionHistory;
+
+const allowedTransactionTypes = ["credit_applied", "refund", "substract"];
+const allowedTransactionTypesPoints = ["points add", "redeem"];
+
+const handleGetHistory = async () => {
+  try {
+    const response = await fetch(historyEndPoint, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token} `,
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      let creditHistroyData = data.transactions.filter((item) =>
+        allowedTransactionTypes.includes(item.transactionType)
+      );
+      let pointsHistroyData = data.transactions.filter((item) =>
+        allowedTransactionTypesPoints.includes(item.transactionType)
+      );
+      creditsHistory.value = creditHistroyData;
+      pointsHistory.value = pointsHistroyData;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const formattedCreditAmount = computed(() => {
   return new Intl.NumberFormat("en-PH", {
     style: "decimal",
     minimumFractionDigits: 2,
   }).format(creditAmount);
 });
-
-onMounted(() => {
-  initTabs();
+const formattedPointsAmount = computed(() => {
+  return new Intl.NumberFormat("en-PH", {
+    style: "decimal",
+    minimumFractionDigits: 2,
+  }).format(userData.pointsBalance);
 });
+
 const balancesCredits = ref([
   {
     name: "Current credits history",
@@ -51,7 +86,7 @@ const balancesPoints = ref([
   {
     name: "Points earned history",
     label: "Available points",
-    value: "2,000.20",
+    value: formattedPointsAmount,
     id: 2,
   },
 ]);
@@ -86,107 +121,6 @@ const servicesItem = ref([
     id: 6,
     name: "more",
     path: MorePath,
-  },
-]);
-
-const creditHistory = ref([
-  {
-    name: "Money transfer",
-    points: "3.5k",
-    dateAndTime: "August 2, 2024 : 09:42 p.m",
-    action: "Transfer money to (jp amando) ",
-  },
-  {
-    name: "Loan",
-    points: 2.2,
-    dateAndTime: "August 2, 2024 : 08:27 p.m",
-    action: "SM loan express",
-  },
-  {
-    name: "Purchase",
-    points: 2.1,
-    dateAndTime: "August 4, 2024 : 06:34 a.m",
-    action: "Bearbrand (1.5 liter)",
-  },
-  {
-    name: "Purchase",
-    points: 1.5,
-    dateAndTime: "July 18, 2024 : 07:12 a.m",
-    action: "Chicken Nuggets (Pure Foods)",
-  },
-  {
-    name: "Purchase",
-    points: 3.5,
-    dateAndTime: "August 5, 2024 : 12:00 p.m",
-    action: "Sleepers (SM)",
-  },
-  {
-    name: "Purchase",
-    points: 3.5,
-    dateAndTime: "June 19, 2024 : 02:27 p.m",
-    action: "Hotdog (7/11)",
-  },
-  {
-    name: "Redemption",
-    points: 3.5,
-    dateAndTime: "July 21, 2024 : 05:42 a.m",
-    action: "From Groceries",
-  },
-  {
-    name: "Purchase",
-    points: 3.5,
-    dateAndTime: "August 4, 2024 : 10:21 p.m",
-    action: "Keyboard (SM)",
-  },
-]);
-const pointsHistory = ref([
-  {
-    name: "Points",
-    points: 3.5,
-    dateAndTime: "August 2, 2024 : 09:42 p.m",
-    action: "Chatime (Down Town Market) ",
-  },
-  {
-    name: "Purchase",
-    points: 2.2,
-    dateAndTime: "August 2, 2024 : 08:27 p.m",
-    action: "Chatime (Down Town Market)",
-  },
-  {
-    name: "Purchase",
-    points: 2.1,
-    dateAndTime: "August 4, 2024 : 06:34 a.m",
-    action: "Bearbrand (1.5 liter)",
-  },
-  {
-    name: "Purchase",
-    points: 1.5,
-    dateAndTime: "July 18, 2024 : 07:12 a.m",
-    action: "Chicken Nuggets (Pure Foods)",
-  },
-  {
-    name: "Purchase",
-    points: 3.5,
-    dateAndTime: "August 5, 2024 : 12:00 p.m",
-    action: "Sleepers (SM)",
-  },
-  {
-    name: "Purchase",
-    points: 3.5,
-    dateAndTime: "June 19, 2024 : 02:27 p.m",
-    action: "Hotdog (7/11)",
-  },
-  {
-    name: "Redemption",
-    points: 3.5,
-    dateAndTime: "July 21, 2024 : 05:42 a.m",
-    action: "From Groceries",
-  },
-  {
-    name: "Purchase",
-    points: 3.5,
-    dateAndTime: "August 4, 2024 : 10:21 p.m",
-    action: "Keyboard (SM)",
   },
 ]);
 
@@ -242,6 +176,7 @@ const convertPoints = () => {
 
 const redeem = () => {
   // Code for redeeming
+  router.push({ name: "product/list" });
   console.log("Redeeming...");
 };
 
@@ -268,7 +203,7 @@ const getAllMerchant = async (token) => {
     if (response.ok) {
       const data = await response.json();
       merchantData.value = data.merchants;
-      console.log(data.merchants[0]._id);
+      console.log(merchantData.value);
       localStorage.setItem("m_data", JSON.stringify(data.merchants));
     } else {
       const data = await response.json();
@@ -286,6 +221,8 @@ onMounted(async () => {
   const userStore = useUserStore();
   const token = userStore.token;
   await getAllMerchant(token);
+  initTabs();
+  handleGetHistory();
 });
 </script>
 
@@ -355,7 +292,7 @@ onMounted(async () => {
               />
 
               <div class="w-full flex flex-row">
-                <HistoryTable id="table" :history="creditHistory" />
+                <HistoryTable id="table" :history="creditsHistory" />
               </div>
             </div>
           </template>
@@ -375,7 +312,7 @@ onMounted(async () => {
                 :key="index"
                 :item="balancePoint"
                 :index="index"
-                :history="creditsHistory"
+                :history="pointsHistory"
               />
               <div class="w-full flex flex-row">
                 <HistoryTable id="table" :history="creditsHistory" />
@@ -413,10 +350,10 @@ onMounted(async () => {
             :key="index"
             :item="balancePoint"
             :index="index"
-            :history="creditHistory"
+            :history="creditsHistory"
           />
           <div class="w-full flex flex-row">
-            <HistoryTable id="table" :history="creditHistory" />
+            <HistoryTable id="table" :history="creditsHistory" />
           </div>
         </div>
       </template>

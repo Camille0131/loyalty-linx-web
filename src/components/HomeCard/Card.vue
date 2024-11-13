@@ -67,7 +67,7 @@ const unHideModal = () => {
               tabindex="-1"
               aria-hidden="true"
               :class="{ hidden: !showModal }"
-              class="flex overflow-y-auto bg-[#00000033] overflow-x-hidden h-full item-center fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+              class="flex overflow-y-auto bg-[#00000033] overflow-x-hidden h-full item-center fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full"
             >
               <div class="p-4 w-full max-w-2xl">
                 <!-- Modal content -->

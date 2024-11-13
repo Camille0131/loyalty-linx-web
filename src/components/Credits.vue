@@ -16,14 +16,12 @@ import MerchantsSelection from "./Credits/MerchantsSelection.vue";
 import { useUserStore } from "../stores/user";
 import Merchants from "./merchants/Merchants.vue";
 import { useRouter } from "vue-router";
-const merchantEndPoint =
-  "https://loyalty-linxapi.vercel.app/api/merchant/get-all";
-
+const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
 const router = useRouter();
 let merchantData = ref([]);
 let isMerchantDataFetched = ref(false); // Flag to track whether merchant data has been fetched
 const userProfile = ref([]);
-const credits = ref("");
+const creditsBalance = ref("");
 const creditsReq = ref("");
 const limit = ref("");
 const newLimit = ref(0);
@@ -31,22 +29,19 @@ const used = ref("");
 
 userProfile.value = JSON.parse(localStorage.getItem("u_data"));
 getCookieUserProfileAsync("u_PRO");
-getCookieUserCredsAsync("userCred");
+// getCookieUserCredsAsync("userCred");
 getCookieUserCredReqsAsync("u_CREDREQ");
-
+const token = localStorage.getItem("a_TOK");
 onMounted(async () => {
   const userStore = useUserStore();
-  const token = userStore.token;
-  // if (!JSON.parse(localStorage.getItem("merchants"))) {
-  //   await getAllMerchant(token);
-  //   isMerchantDataFetched.value = true;
-  // }
-  used.value = userProfile.value.balance;
+
+  used.value = userProfile.value.creditsBalance;
+  creditsBalance.value = userProfile.value.creditsBalance;
   sessionStorage.setItem("u_CRDBAl", JSON.stringify(userProfile.value.balance));
   limit.value = userProfile.value.limit;
-  newLimit.value = limit.value - used.value;
-
+  newLimit.value = limit.value - creditsBalance.value;
   sessionStorage.setItem("limit", JSON.stringify(userProfile.value.limit));
+  getAllMerchant();
 });
 
 //  Get token from cookies
@@ -64,6 +59,7 @@ async function getCookieAsync(name) {
     resolve(null); // Return null if the cookie is not found
   });
 }
+
 async function getCookieUserProfileAsync(name) {
   try {
     const cookieValue = await getCookieAsync(name);
@@ -76,18 +72,7 @@ async function getCookieUserProfileAsync(name) {
     console.error("Error getting token cookie:", error);
   }
 }
-async function getCookieUserCredsAsync(name) {
-  try {
-    const cookieValue = await getCookieAsync(name);
-    if (cookieValue) {
-      credits.value = JSON.parse(decodeURIComponent(cookieValue));
-    } else {
-      // console.log("userProfile cookie not found");
-    }
-  } catch (error) {
-    console.error("Error getting token cookie:", error);
-  }
-}
+
 async function getCookieUserCredReqsAsync(name) {
   try {
     const cookieValue = await getCookieAsync(name);
@@ -108,29 +93,30 @@ async function getCookieUserCredReqsAsync(name) {
   }
 }
 
-// const getAllMerchant = async (token) => {
-//   try {
-//     const response = await fetch(merchantEndPoint, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log("fecth");
-//       localStorage.setItem("merchants", JSON.stringify(data.merchants));
-//     } else {
-//       const data = await response.json();
-//       console.log(data);
-//     }
-//   } catch (error) {
-//     console.groupEnd(error);
-//   }
-// };
+const getAllMerchant = async () => {
+  try {
+    const response = await fetch(merchantEndPoint, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-merchantData.value = JSON.parse(localStorage.getItem("m_data"));
+    if (response.ok) {
+      const data = await response.json();
+      merchantData.value = data.merchants;
+    } else {
+      const data = await response.json();
+      console.log(data);
+    }
+  } catch (error) {
+    console.groupEnd(error);
+  }
+};
+
+// merchantData.value = JSON.parse(localStorage.getItem("m_data"));
+
 const balances = ref([
   {
     balanceItems: [

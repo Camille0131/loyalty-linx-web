@@ -7,14 +7,10 @@ import { useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 
-// const merchant = route.params.merchant;
-// 10% Interest Rate
 const interestRate = 0.1;
 const step = ref("");
 getCookieUserIdAsync("u_TOK");
-
 const limit = JSON.parse(sessionStorage.getItem("limit"));
-
 let newLimit = limit;
 const merchant = JSON.parse(sessionStorage.getItem("merchantItem"));
 const userTok = ref(null);
@@ -62,11 +58,11 @@ const monthsUsed = ref("2");
 const creditAmount = ref("500");
 const hideModal = () => {
   sessionStorage.removeItem("merchantItem");
+  router.back();
 };
 
 const merchantId = merchant?._id;
-const urlCreditRequest = `https://loyalty-linxapi.vercel.app/api/user/${merchantId}/request-credit`;
-console.log(merchantId);
+const urlCreditRequest = `http://localhost:5000/api/user/${merchantId}/request-credit`;
 // Computed property to format the credit amount with currency formatting
 
 // Computed property to format the credit amount with currency formatting
@@ -174,6 +170,7 @@ const handleCreditRequest = async () => {
           }
         });
       } else {
+        console.log(data);
         Swal.fire({
           title: "Request fail!",
           text: data.message,
@@ -200,24 +197,22 @@ const handleCreditRequest = async () => {
           type="button"
           class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
         >
-          <router-link to="/home">
-            <svg
-              class="w-3 h-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 14 14"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-              />
-            </svg>
-            <span class="sr-only">Close modal</span>
-          </router-link>
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
         </button>
       </div>
       <div class="grid gap-4 mb-4 grid-cols-2">

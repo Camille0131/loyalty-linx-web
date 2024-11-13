@@ -6,9 +6,9 @@ import { useUserStore } from "../../stores/user";
 // import "intl-tel-input/build/css/intlTelInput.css";
 // import intlTelInput from "intl-tel-input";
 
-// const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login";
-const urlLogin = "https://loyalty-linxapi.vercel.app/api/user/login/mobileNo";
-const urlProfile = "https://loyalty-linxapi.vercel.app/api/user/profile";
+// const urlLogin = "http://localhost:5000/api/user/login";
+const urlLogin = "http://localhost:5000/api/user/login/mobileNo";
+const urlProfile = "http://localhost:5000/api/user/profile";
 
 const email = ref("");
 const mobileNo = ref("");
@@ -104,18 +104,7 @@ const handleSubmit = async (e) => {
         path: "/verification",
         query: { gen: generetedOtp.value },
       });
-      //save data in cookies
-
-      // console.log(data.token);
-      // if (data.isFirstTimeLogin) {
-
-      // } else {
-      //   await getUserProfile(data.token);
-      //   userStore.setToken(data.token);
-      // }
-      // console.log(data);
-      // Get user profile data
-      // getUserProfile(data.token);
+ 
 
       return data;
     } else {

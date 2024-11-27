@@ -18,13 +18,13 @@ import TransactionHistoryModal from "./modal/TransactionHistoryModal.vue";
 import MerchantsSelection from "./Credits/MerchantsSelection.vue";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
-const creditAmount = JSON.parse(sessionStorage.getItem("u_CRDBAl"));
 const router = useRouter();
 let merchantData = ref([]);
 const historyEndPoint =
   "http://localhost:5000/api/transactions/get-user-transactions";
 const merchantEndPoint = "http://localhost:5000/api/merchant/get-all";
 const userData = JSON.parse(localStorage.getItem("u_data"));
+const creditAmount = userData.balance;
 const token = localStorage.getItem("a_TOK");
 const creditsHistory = ref([]);
 const pointsHistory = ref([]);

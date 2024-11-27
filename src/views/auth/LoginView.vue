@@ -104,7 +104,6 @@ const handleSubmit = async (e) => {
         path: "/verification",
         query: { gen: generetedOtp.value },
       });
- 
 
       return data;
     } else {

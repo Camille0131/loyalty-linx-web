@@ -244,11 +244,11 @@ const applyCredit = () => {
 };
 
 const payCredits = () => {
-  router.push({ name: "selection/payment" });
+  router.push({ name: "payment" });
 };
 
 const loanStatus = () => {
-  router.push({ name: "loan/status" });
+  router.push({ name: "loan status" });
 };
 
 const hideModal = () => {

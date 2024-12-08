@@ -43,7 +43,7 @@ function getNearestDate(paymentLogs) {
 const handleLoanStatus = (item) => {
   if (item.status === "approved") {
     sessionStorage.setItem("loanMonitorStatus", JSON.stringify(item));
-    router.push({ name: "loan/monitor" });
+    router.push({ name: "loan details" });
   } else {
     console.log("Your request not approve yet");
   }
@@ -76,7 +76,9 @@ const handleBack = () => {
 </script>
 <template>
   <div class="px-2">
-    <div class="p-5">
+    <!-- Header with Back Button -->
+
+    <!-- <div class="p-5">
       <svg
         @click="handleBack"
         fill="#111827"
@@ -113,10 +115,28 @@ const handleBack = () => {
           <g></g>
         </g>
       </svg>
-    </div>
+    </div> -->
 
     <div>
-      <div class="flex justify-end">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center py-3">
+          <button
+            @click="handleBack"
+            class="flex items-center gap-2 text-gray-700 bg-white border hover:bg-gray-300 px-3 py-1 rounded-md shadow-sm"
+          >
+            <svg
+              fill="currentColor"
+              class="w-5 h-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M10.828 12l4.95-4.95-1.414-1.414L7 12l7.364 7.364 1.414-1.414z"
+              />
+            </svg>
+            Back
+          </button>
+        </div>
         <div class="relative w-60 text-left">
           <Filter
             :options="[`all`, 'approved', 'pending', 'rejected']"

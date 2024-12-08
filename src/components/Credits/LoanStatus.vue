@@ -38,8 +38,8 @@ const handleBack = () => {
 };
 </script>
 <template>
-  <div class="p-5">
-    <div class="p-5">
+  <div class="px-2">
+    <!-- <div class="p-5">
       <svg
         @click="handleBack"
         fill="#111827"
@@ -76,8 +76,25 @@ const handleBack = () => {
           <g></g>
         </g>
       </svg>
+    </div> -->
+    <div class="flex items-center py-3">
+      <button
+        @click="handleBack"
+        class="flex items-center gap-2 text-gray-700 bg-white border hover:bg-gray-300 px-3 py-1 rounded-md shadow-sm"
+      >
+        <svg
+          fill="currentColor"
+          class="w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10.828 12l4.95-4.95-1.414-1.414L7 12l7.364 7.364 1.414-1.414z"
+          />
+        </svg>
+        Back
+      </button>
     </div>
-
     <div class="text-center text-neutral-900 bg-white py-6 rounded-sm">
       <div class="flex justify-center align-center items-center">
         <div class="w-15 mr-4">

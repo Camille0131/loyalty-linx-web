@@ -140,10 +140,11 @@ const routes = [
   },
   {
     path: "/loan/status",
-    name: "loan/status",
-    component: () => import("../components/Credits/LoanStatusLanding.vue"),
+    name: "loan status",
+    // component: () => import("../components/Credits/LoanStatusLanding.vue"),
+    component: () => import("../views/pages/user/LoanStatusView.vue"),
     meta: {
-      title: "Credit status",
+      title: "Loan status",
       requiresAuth: true,
     },
   },
@@ -158,10 +159,10 @@ const routes = [
   },
   {
     path: "/loan/monitor",
-    name: "loan/monitor",
-    component: () => import("../components/Credits/LoanStatus.vue"),
+    name: "loan details",
+    component: () => import("../views/pages/user/LoanDetailsView.vue"),
     meta: {
-      title: "Credit monitor",
+      title: "Loan details",
       requiresAuth: true,
     },
   },
@@ -230,8 +231,8 @@ const routes = [
   },
   {
     path: "/selection/payment",
-    name: "selection/payment",
-    component: () => import("../components/Payment/ChooseLoanPayment.vue"),
+    name: "payment",
+    component: () => import("../views/pages/user/PaymentsListView.vue"),
     meta: {
       title: "",
       requiresAuth: true,
@@ -279,6 +280,15 @@ const routes = [
     component: () => import("../components/Shop/CheckOut.vue"),
     meta: {
       title: "check-out",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/orders",
+    name: "orders",
+    component: () => import("../views/pages/user/OrdersView.vue"),
+    meta: {
+      title: "Orders",
       requiresAuth: true,
     },
   },

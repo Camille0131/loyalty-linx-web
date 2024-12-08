@@ -31,10 +31,9 @@ const profileMenu = ref([
   },
   {
     id: 2,
-    name: "Favorites",
-    icon: ` <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-</svg>`,
+    name: "Orders",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" class='w-6' ><path d="M 4 3 L 4 15 L 2 15 L 2 18 C 2 19.654 3.346 21 5 21 L 18 21 C 19.64497 21 21 19.64497 21 18 L 21 3 L 4 3 z M 6 5 L 19 5 L 19 18 C 19 18.56503 18.56503 19 18 19 C 17.448 19 17 18.551 17 18 L 17 15 L 6 15 L 6 5 z M 8 7 L 8 9 L 10 9 L 10 7 L 8 7 z M 12 7 L 12 9 L 17 9 L 17 7 L 12 7 z M 8 11 L 8 13 L 10 13 L 10 11 L 8 11 z M 12 11 L 12 13 L 17 13 L 17 11 L 12 11 z M 4 17 L 15 17 L 15 18 C 15 18.35 15.060875 18.687 15.171875 19 L 5 19 C 4.449 19 4 18.551 4 18 L 4 17 z"/></svg>
+`,
   },
 
   {
@@ -98,6 +97,51 @@ const profileMenu = ref([
           </svg>`,
   },
 ]);
+
+const handleButton = (id) => {
+  switch (id) {
+    case 1:
+      accountSettings();
+      break;
+    case 2:
+      Orders();
+      break;
+    case 3:
+      Settings();
+      break;
+    case 4:
+      FAQ();
+      break;
+    case 5:
+      help();
+      break;
+    case 6:
+      signOut();
+      break;
+
+    default:
+      console.error(`Unknown service ID: ${service.id}`);
+    // You could also perform some other default action here
+  }
+};
+const accountSettings = () => {
+  console.log("Account Settings");
+};
+const Orders = () => {
+  router.push({ name: "orders" });
+};
+const Settings = () => {
+  console.log("Settings");
+};
+const FAQ = () => {
+  console.log("FAQ");
+};
+const help = () => {
+  console.log("Help");
+};
+const signOut = () => {
+  console.log("Sign Out");
+};
 </script>
 
 <template>
@@ -207,6 +251,7 @@ const profileMenu = ref([
           </button>
           <div v-for="item in profileMenu" :key="item.id" class="py-2 mt-2">
             <button
+              @click="handleButton(item.id)"
               class="w-full flex item-center px-4 py-5 border border-gray-300 rounded-lg hover:bg-gray-100"
             >
               <span class="px-2 self-center" v-html="item.icon"></span>

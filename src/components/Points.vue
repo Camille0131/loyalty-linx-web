@@ -119,7 +119,8 @@ const convert = () => {
   console.log("Converting....");
 };
 const redeem = () => {
-  console.log("Converting....");
+  console.log("Redeem....");
+  router.push({ name: "product/list" });
 };
 const shop = () => {
   console.log("Go to shop.....");

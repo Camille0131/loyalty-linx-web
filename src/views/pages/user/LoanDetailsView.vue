@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import DefaultLayouts from "../../../layouts/DefaultLayouts.vue";
-import LoanStatusLanding from "../../../components/Credits/LoanStatusLanding.vue";
+import LoanStatus from "../../../components/Credits/LoanStatus.vue";
 </script>
 
 <template>
   <DefaultLayouts>
-    <LoanStatusLanding />
+    <LoanStatus />
   </DefaultLayouts>
 </template>
